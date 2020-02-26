@@ -123,13 +123,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Experiente.cpp" />
     <ClCompile Include="Jogador.cpp" />
+    <ClCompile Include="Jogo.cpp" />
+    <ClCompile Include="Letra.cpp" />
+    <ClCompile Include="Palavra.cpp" />
     <ClCompile Include="Ponto.cpp" />
+    <ClCompile Include="Principiante.cpp" />
     <ClCompile Include="Tabuleiro.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Experiente.h" />
     <ClInclude Include="Jogador.h" />
+    <ClInclude Include="Jogo.h" />
+    <ClInclude Include="Letra.h" />
+    <ClInclude Include="Palavra.h" />
     <ClInclude Include="Ponto.h" />
+    <ClInclude Include="Principiante.h" />
     <ClInclude Include="Tabuleiro.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,12 +1,16 @@
 #include "Ponto.h"
 
 Ponto::Ponto(){
+	x = -1;
+	y = -1;
 }
 
 Ponto::Ponto(int m_x, char m_y) {
 }
 
 Ponto::Ponto(int m_x, int m_y) {
+	x = m_x;
+	y = m_y;
 }
 
 Ponto::~Ponto() {

@@ -15,6 +15,6 @@ class Jogador {
 		string Get_nome(void) const { return nome; };
 		int Get_idade(void) const { return idade; };
 		int Get_pontos(void) const { return pontos; };
-		void operator ++ (int pontos);
+		void operator++ (int pontos);
 };
 
