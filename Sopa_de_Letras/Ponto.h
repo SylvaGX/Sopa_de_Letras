@@ -9,11 +9,9 @@ class Ponto{
 		int y; //1 -- 3
 	public:
 		Ponto();
-		Ponto(int m_x, char m_y);
 		Ponto(int m_x, int m_y);
 		virtual ~Ponto();
 		bool Set_x(int m_x);
-		bool Set_y(int m_y);
 		bool Set_y(int m_y);
 		void Set_P(int m_x, int m_y);
 		void Set_P(Ponto m_P);

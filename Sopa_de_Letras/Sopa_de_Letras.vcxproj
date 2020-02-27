@@ -130,6 +130,7 @@
     <ClCompile Include="Palavra.cpp" />
     <ClCompile Include="Ponto.cpp" />
     <ClCompile Include="Principiante.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Tabuleiro.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Jogo.h" />
     <ClInclude Include="Letra.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="Palavra.h" />
     <ClInclude Include="Ponto.h" />
     <ClInclude Include="Principiante.h" />

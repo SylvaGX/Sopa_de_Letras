@@ -1,33 +1,36 @@
 #include "Ponto.h"
+#include <iostream>
+
 
 Ponto::Ponto(){
-	x = -1;
-	y = -1;
-}
-
-Ponto::Ponto(int m_x, char m_y) {
+	this->x = -1;
+	this->y = -1;
 }
 
 Ponto::Ponto(int m_x, int m_y) {
-	x = m_x;
-	y = m_y;
+	this->x = m_x;
+	this->y = m_y;
 }
 
 Ponto::~Ponto() {
 }
 
 bool Ponto::Set_x(int m_x) {
-	return false;
+	return (this->x = m_x);
 }
 
 bool Ponto::Set_y(int m_y) {
-	return false;
+	return (this->y = m_y);
 }
 
 void Ponto::Set_P(int m_x, int m_y) {
+	this->x = m_x;
+	this->y = m_y;
 }
 
 void Ponto::Set_P(Ponto m_P) {
+	this->x = m_P.Get_x();
+	this->y = m_P.Get_y();
 }
 
 bool Ponto::Ask2Set_P(void) {
@@ -39,6 +42,7 @@ bool Ponto::IsValid(void) {
 }
 
 void Ponto::ShowPonto(void) {
+	cout << "X: " << this->x << " Y: " << this->y << endl;
 }
 
 bool Ponto::operator==(const Ponto ponto) const {

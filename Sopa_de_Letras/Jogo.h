@@ -4,13 +4,15 @@
 
 class Jogo {
 	private:
-		Tabuleiro tabuleiro;
-		Jogador jogador;
+		Tabuleiro *tabuleiro;
+		Jogador *jogador;
 	public:
 		Jogo();
-		Jogo(Tabuleiro m_tabuleiro, Jogador m_jogador);
+		Jogo(Tabuleiro *tabuleiro, Jogador *jogador);
 		virtual ~Jogo();
-		Tabuleiro getTabuleiro();
-		Jogador getJogador();
+		void iniciarJogo();
+		void init(); //função do jogo
+		Tabuleiro* getTabuleiro();
+		Jogador* getJogador();
 };
 

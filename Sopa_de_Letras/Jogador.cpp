@@ -1,19 +1,33 @@
 #include "Jogador.h"
 
 Jogador::Jogador() {
-	nome = "Sem nome";
-	idade = -1;
-	pontos = 0;
+	this->nome = "Sem nome";
+	this->idade = -1;
+	this->pontos = 0;
 }
 
-Jogador::Jogador(string m_nome, int m_idade, int m_pontos) {
-	nome = m_nome;
-	idade = m_idade;
-	pontos = m_pontos;
+Jogador::Jogador(string nome, int idade, int pontos) {
+	this->nome = nome;
+	this->idade = idade;
+	this->pontos = pontos;
 }
 
 Jogador::~Jogador() {
 }
 
+void Jogador::setJogador(string nome, int idade) {
+	this->nome = nome;
+	this->idade = idade;
+}
+
+void Jogador::setNome(string nome) {
+	this->nome = nome;
+}
+
+void Jogador::setIdade(int idade) {
+	this->idade = idade;
+}
+
 void Jogador::operator++(int pontos) {
+	
 }

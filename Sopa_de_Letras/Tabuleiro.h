@@ -14,9 +14,14 @@ class Tabuleiro {
 		vector<string> palavras;
 	public:
 		Tabuleiro();
-		Tabuleiro(vector<vector<Letra>> m_matrizLetras, int m_DimX, int m_DimY, int m_nPalavras, vector<string> m_palavras);
+		Tabuleiro(vector<vector<Letra>> matrizLetras, int DimX, int DimY, int nPalavras, vector<string> palavras);
 		virtual ~Tabuleiro();
 		void Draw();
+		void setDimX(int DimX);
+		void setDimY(int DimY);
+		void set_nPalavras(int nPalavras);
+		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
+		void setPalavras(vector<string> palavras);
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };

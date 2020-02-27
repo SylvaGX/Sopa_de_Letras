@@ -2,12 +2,12 @@
 #include "Ponto.h"
 
 class Letra {
-	public:
+	private:
 		char letra;
 		Ponto ponto;
 		int ascii;
 		int tipo_M_m; // 0- Maiscula, 1 - minuscula
-	private:
+	public:
 		Letra();
 		Letra(char m_letra, Ponto m_ponto, int m_ascii, int m_tipo_M_m);
 		virtual ~Letra();
