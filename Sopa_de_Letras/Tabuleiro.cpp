@@ -1,4 +1,9 @@
+#include <iostream>
+#include <vector>
+#include <time.h>
 #include "Tabuleiro.h"
+
+using namespace std;
 
 Tabuleiro::Tabuleiro() {
 	this->DimX = -1;
@@ -18,7 +23,13 @@ Tabuleiro::~Tabuleiro() {
 }
 
 void Tabuleiro::Draw() {
-
+	//Desenhar o tabuleiro ---- Tiago
+	for (int i = 0; i < this->DimY; i++) {
+		for (int j = 0; j < this->DimX; j++) {
+			cout << this->matrizLetras[i][j].getLetra()<<" ";
+		}
+		cout << endl;
+	}
 }
 
 void Tabuleiro::setDimX(int DimX) {
@@ -39,6 +50,26 @@ void Tabuleiro::setMatrizLetras(vector<vector<Letra>> matrizLetras) {
 
 void Tabuleiro::setPalavras(vector<string> palavras) {
 	this->palavras = palavras;
+}
+
+vector<vector<Letra>> Tabuleiro::getMatrizLetras() {
+	return this->matrizLetras;
+}
+
+vector<string> Tabuleiro::getPalavras() {
+	return this->palavras;
+}
+
+void Tabuleiro::GenerarMatriz() {
+	srand(time(NULL));
+	this->matrizLetras.resize(DimX, vector<Letra>(DimY));
+	int r = 0;
+	for (int i = 0; i < this->DimY; i++) {
+		for (int j = 0; j < this->DimX; j++) {
+			r = rand() % 26 + 65;
+			this->matrizLetras[i][j] = Letra((char) r, Ponto(i, j), r, 1);
+		}
+	}
 }
 
 void Tabuleiro::Save(ofstream& os) {

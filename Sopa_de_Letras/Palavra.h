@@ -11,8 +11,11 @@ class Palavra {
 		Palavra();
 		Palavra(vector<Letra> m_palavra, int m_orientacao, int m_estado);
 		virtual ~Palavra();
+		void setOrientacao(int orientacao);
+		void setEstado(int estado);
 		vector<Letra> getPalavra();
 		int getOrientacao();
 		int getEstado();
+		bool operator== (Palavra str2);
 };
 

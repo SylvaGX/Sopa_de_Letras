@@ -1,14 +1,17 @@
+#include <iostream>
+#include <string>
 #include "Jogador.h"
 
+using namespace std;
+
 Jogador::Jogador() {
-	this->nome = "Sem nome";
-	this->idade = -1;
-	this->pontos = 0;
+	string Nnome = PedirNome();
+	int Nidade = PedirIdade();
+	setJogador(Nnome, Nidade);
 }
 
 Jogador::Jogador(string nome, int idade, int pontos) {
-	this->nome = nome;
-	this->idade = idade;
+	setJogador(nome, idade);
 	this->pontos = pontos;
 }
 
@@ -18,6 +21,7 @@ Jogador::~Jogador() {
 void Jogador::setJogador(string nome, int idade) {
 	this->nome = nome;
 	this->idade = idade;
+	this->pontos = 0;
 }
 
 void Jogador::setNome(string nome) {
@@ -28,6 +32,25 @@ void Jogador::setIdade(int idade) {
 	this->idade = idade;
 }
 
-void Jogador::operator++(int pontos) {
-	
+string Jogador::PedirNome() {
+	string Nnome;
+	cout << "Insira o seu nome\n-> ";
+	getline(cin, Nnome);
+	return Nnome;
+}
+
+int Jogador::PedirIdade() {
+	int Nidade;
+	cout << "Insira a sua idade\n-> ";
+	cin >> Nidade;
+	return Nidade;
+}
+
+bool Jogador::JogarPalavra() {
+
+	return false;
+}
+
+void Jogador::operator++(int p) {
+	this->pontos++;
 }

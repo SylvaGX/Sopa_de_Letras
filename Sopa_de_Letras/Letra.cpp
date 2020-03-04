@@ -16,6 +16,22 @@ Letra::Letra(char m_letra, Ponto m_ponto, int m_ascii, int m_tipo_M_m) {
 Letra::~Letra() {
 }
 
+void Letra::setLetra(char letra) {
+	this->letra = letra;
+}
+
+void Letra::setPonto(Ponto ponto) {
+	this->ponto = ponto;
+}
+
+void Letra::setAscii(int ascii) {
+	this->ascii = ascii;
+}
+
+void Letra::setTipo_M_m(int tipo_M_m) {
+	this->tipo_M_m = tipo_M_m;
+}
+
 char Letra::getLetra() {
 	return this->letra;
 }
@@ -30,4 +46,8 @@ int Letra::getascii() {
 
 int Letra::getTipo_M_m() {
 	return this->tipo_M_m;
+}
+
+bool Letra::operator!=(Letra letra) {
+	return (this->getLetra() != letra.getLetra()) ? true : false;
 }

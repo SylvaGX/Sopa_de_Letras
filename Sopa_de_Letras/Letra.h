@@ -11,9 +11,14 @@ class Letra {
 		Letra();
 		Letra(char m_letra, Ponto m_ponto, int m_ascii, int m_tipo_M_m);
 		virtual ~Letra();
+		void setLetra(char letra);
+		void setPonto(Ponto ponto);
+		void setAscii(int ascii);
+		void setTipo_M_m(int tipo_M_m);
 		char getLetra();
 		Ponto getPonto();
 		int getascii();
 		int getTipo_M_m();
+		bool operator!=(Letra letra);
 };
 

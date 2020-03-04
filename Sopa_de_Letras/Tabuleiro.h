@@ -22,6 +22,9 @@ class Tabuleiro {
 		void set_nPalavras(int nPalavras);
 		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
 		void setPalavras(vector<string> palavras);
+		vector<vector<Letra>> getMatrizLetras();
+		vector<string> getPalavras();
+		void GenerarMatriz();
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };
