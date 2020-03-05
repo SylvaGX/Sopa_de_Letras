@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -22,5 +23,6 @@ class Jogador {
 		int GetPontos(void) const { return pontos; };
 		bool JogarPalavra();
 		void operator++ (int);
+		friend ostream& operator<<(ostream& os, const Jogador *jog);
 };
 

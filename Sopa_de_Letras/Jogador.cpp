@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Jogador.h"
 
 using namespace std;
@@ -53,4 +51,9 @@ bool Jogador::JogarPalavra() {
 
 void Jogador::operator++(int p) {
 	this->pontos++;
+}
+
+ostream& operator<<(ostream& os, const Jogador *jog) {
+	os << jog->GetNome() << endl << jog->GetIdade() << endl;
+	return os;
 }
