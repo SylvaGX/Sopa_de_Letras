@@ -1,6 +1,9 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include "Letra.h"
+
+using namespace std;
 
 class Palavra {
 	private:
@@ -16,6 +19,9 @@ class Palavra {
 		vector<Letra> getPalavra();
 		int getOrientacao();
 		int getEstado();
-		bool operator== (Palavra str2);
+		void showPalavra();
+		void setPalavra(string str);
+		int verificaTipo(char c);
+		bool operator== (string str2);
 };
 

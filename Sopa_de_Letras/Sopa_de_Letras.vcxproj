@@ -144,6 +144,9 @@
     <ClInclude Include="Principiante.h" />
     <ClInclude Include="Tabuleiro.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="words.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

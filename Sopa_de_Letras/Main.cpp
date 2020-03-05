@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <windows.h>
 #include "Ponto.h"
 #include "Letra.h"
 #include "Palavra.h"
@@ -13,7 +14,17 @@
 
 using namespace std;
 
+void gotoxy(short x, short y) {
+	COORD coord = {y, x};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
 int main() {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	int w = csbi.dwSize.X;//Colunsa da janela
+	int h = csbi.dwSize.Y;//Linhas da janela
+	setlocale(LC_ALL, "");
 	Jogo jogo;
 	char c;
 	int l = 1;
@@ -27,6 +38,23 @@ int main() {
 		cin.ignore();
 		switch (c) {
 			case '1':{
+				gotoxy(0,0);
+				cout << "                       ";
+				gotoxy(1, 0);
+				cout << "                       ";
+				gotoxy(2, 0);
+				cout << "                       ";
+				gotoxy(3, 0);
+				cout << "                       ";
+				gotoxy(4, 0);
+				cout << "              ";
+				gotoxy(5, 0);
+				cout << "                  ";
+				gotoxy(6, 0);
+				cout << "         ";
+				gotoxy(7, 0);
+				cout << "    ";
+				gotoxy(0, 0);
 				jogo.NewGame();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
 				jogo.init();//Loop do jogo
 				break;

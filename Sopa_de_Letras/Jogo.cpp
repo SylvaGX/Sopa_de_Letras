@@ -11,10 +11,11 @@ Jogo::Jogo(){
 Jogo::~Jogo() {
 }
 
+//Loop do jogo
 void Jogo::init() {
 	this->tabuleiro->Draw();
-	cout << this->jogador->GetNome() << endl;
-	cout << this->jogador->GetIdade() << endl;
+	this->tabuleiro->showPalavras();
+	cout << this->jogador;
 	cout << this->jogador->GetPontos() << endl;
 	(*(this->jogador))++;
 	cout << this->jogador->GetPontos() << endl;
@@ -31,9 +32,8 @@ Jogador* Jogo::getJogador() {
 void Jogo::NewGame() {
 	this->jogador = new Jogador();
 	this->tabuleiro = new Tabuleiro();
-	this->tabuleiro->setDimX(20);
-	this->tabuleiro->setDimY(20);
 	this->tabuleiro->GenerarMatriz();
+	this->tabuleiro->loadPalavras();
 }
 
 void Jogo::SaveGame() {

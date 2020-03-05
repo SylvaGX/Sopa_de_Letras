@@ -19,6 +19,6 @@ class Letra {
 		Ponto getPonto();
 		int getascii();
 		int getTipo_M_m();
-		bool operator!=(Letra letra);
+		bool operator!=(char letra);
 };
 

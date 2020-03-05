@@ -34,12 +34,31 @@ int Palavra::getEstado() {
 	return this->estado;
 }
 
-bool Palavra::operator==(Palavra str2) {
+void Palavra::showPalavra() {
+	for (size_t i = 0; i < this->getPalavra().size(); i++) {
+		cout << this->getPalavra()[i].getLetra();
+	}
+	cout << endl;
+}
+
+void Palavra::setPalavra(string str) {
+	int strl = str.length();
+	this->palavra.resize(strl);
+	for (int i = 0; i < strl; i++) {
+		this->palavra[i] = Letra(str[i], Ponto(-1,-1), (int)str[i], verificaTipo(str[i]));
+	}
+}
+
+int Palavra::verificaTipo(char c) {
+	return ((c >= 'a') && (c <= 'z')) ? 1 : ((c >= 'A') && (c <= 'Z')) ? 0 : -1;
+}
+
+bool Palavra::operator==(string str2) {
 	int p = 0;
-	if (this->getPalavra().size() == str2.getPalavra().size()) {
+	if (this->getPalavra().size() == str2.length()) {
 		p = 1;
-		for (int i = 0; (i < str2.getPalavra().size()) && p; i++) {
-			if (this->getPalavra()[i] != str2.getPalavra()[i]) {
+		for (size_t i = 0; (i < str2.length()) && p; i++) {
+			if (this->getPalavra()[i] != str2[i]) {
 				p = 0;
 			}
 		}
