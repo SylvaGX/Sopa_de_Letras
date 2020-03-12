@@ -53,6 +53,10 @@ int Palavra::verificaTipo(char c) {
 	return ((c >= 'a') && (c <= 'z')) ? 1 : ((c >= 'A') && (c <= 'Z')) ? 0 : -1;
 }
 
+int Palavra::size() {
+	return (palavra.size());
+}
+
 bool Palavra::operator==(string str2) {
 	int p = 0;
 	if (this->getPalavra().size() == str2.length()) {

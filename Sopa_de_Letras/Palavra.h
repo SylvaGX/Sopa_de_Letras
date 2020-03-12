@@ -22,6 +22,7 @@ class Palavra {
 		void showPalavra();
 		void setPalavra(string str);
 		int verificaTipo(char c);
+		int size();
 		bool operator== (string str2);
 };
 

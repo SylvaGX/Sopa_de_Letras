@@ -101,6 +101,19 @@ void Tabuleiro::GenerarMatriz() {
 	}
 }
 
+void Tabuleiro::SelectPalavras(){
+	vector<Palavra> auxP;
+	for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
+		palavras.erase(i);
+		i--;//ir para tras porque foi apagado o elemento atual
+		/*
+		if (this->palavras[i].size() <=	min(DimX,DimY)) {
+			Diagonal
+		}
+		*/
+	}
+}
+
 void Tabuleiro::Save(ofstream& os) {
 }
 

@@ -34,6 +34,7 @@ class Tabuleiro {
 		void showPalavras();
 		bool loadPalavras();
 		void GenerarMatriz();
+		void SelectPalavras();
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };

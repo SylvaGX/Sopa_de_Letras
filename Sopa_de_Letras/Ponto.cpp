@@ -2,8 +2,8 @@
 #include <iostream>
 
 
-Ponto::Ponto(){
-	this->x = -1;
+Ponto::Ponto() {
+	this->x = -1; 
 	this->y = -1;
 }
 
