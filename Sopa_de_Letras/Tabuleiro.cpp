@@ -92,64 +92,96 @@ bool Tabuleiro::loadPalavras() {
 void Tabuleiro::GenerarMatriz() {
 	srand(time(NULL));
 	this->matrizLetras = vector<vector<Letra> >(DimX, vector<Letra>(DimY));
+	SelectPalavras();
 	int r = 0;
 	for (int i = 0; i < this->DimX; i++) {
 		for (int j = 0; j < this->DimY; j++) {
-			r = rand() % 26 + 65;
-			this->matrizLetras[i][j] = Letra((char) r, Ponto(i, j), r, 1);
+			if (this->matrizLetras[i][j].getLetra() == '-') {
+				r = rand() % 26 + 65;
+				this->matrizLetras[i][j] = Letra((char)r, Ponto(i, j), r, 1);
+			}
 		}
 	}
 }
 
 void Tabuleiro::SelectPalavras(){
-	vector<Palavra> auxP;
-	vector<int> vert(DimX, 0);
-	vector<int> horz(DimY, 0);
+	vector<Palavra> auxPal;
+	vector<pair<int, int>> auxPos;
 	time_t t;
 	srand(time(&t));
 	int dir = 0;
+	int x = 0;//Linhas
+	int y = 0;//Colunas
+	int restoEspaco = 0;
+	bool porPalavra = true;
 	for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
-		dir = rand() % 2;
-		if (dir == 0) { // Vertical
-			if (i->size() <= DimX) { //Por na vertical se menor do que DimX
-				if (!all_of(horz.begin(), horz.end(), [horz](int x) {return x == 1; })) {
-					//Verificar se tem palavras na posição que vou inserir a palavra
-					for (size_t i = 0; i < horz.size(); i++) {
+		if (i->size() < max(DimX, DimY)) {
+			dir = rand() % 2;
+			if (dir == 0) { // Vertical
+				if (i->size() == DimX) { //Por na vertical se menor do que DimX
+					while (1) {
+						y = rand() % DimX;
+						if (find(auxPos.begin(), auxPos.end(), make_pair(0,y)) == auxPos.end()) {
+							for (size_t j = 0; j < DimX; j++) {
+								if (matrizLetras[j][y] != '-') {
+									if (matrizLetras[j][y] != i->getPalavra()[j]) {
+										porPalavra = false;
+									}
+								}
+							}
+							if (porPalavra) {
+								for (size_t j = 0; j < DimX; j++) {
+									i->getPalavra()[j].setPonto(Ponto(j,y));
+									matrizLetras[j][y] = i->getPalavra()[j];
+								}
+							}
+						}
+					}
+				}
+				else if (i->size() < DimX) {
+					restoEspaco = DimX - i->size();
+					while (1) {
+
+					}
+					if (DimX < DimY) {//senão meter na horizontal ou diagonal
+
+					}
+					else if (DimX > DimY) {
+
+					}
+					else {
 
 					}
 				}
-				else if(i->size() <= DimY) {//senão meter na horizontal ou diagonal
+				else if (i->size() <= DimY) {//Senão por na horizontal ou diagonal se menor do que DimY
+					//Se DimY < DimX decidir na horizontal ou diagonal
 
 				}
+				//não por a palavra
 			}
-			else if(i->size() <= DimY) {//Senão por na horizontal ou diagonal se menor do que DimY
-				//Se DimY < DimX decidir na horizontal ou diagonal
-				
-			}
-			//não por a palavra
-		}
-		else if (dir == 1) { // Horizontal
-			if (i->size() <= DimY) {//Por na horizontal se menor do que DimY
+			else if (dir == 1) { // Horizontal
+				if (i->size() <= DimY) {//Por na horizontal se menor do que DimY
 
+				}
+				else if (i->size() <= DimX) {//Senão por na vertical ou diagonal se menor do que DimX
+					//Se DimX < DimY decidir na vertical ou diagonal
+				}
 			}
-			else if (i->size() <= DimX) {//Senão por na vertical ou diagonal se menor do que DimX
-				//Se DimX < DimY decidir na vertical ou diagonal
+			else { //Diagonal
+				/*
+				Ver se a palavra cabe na diagonal
+				if (this->palavras[i].size() <=	min(DimX,DimY)) {
+					Diagonal
+				}
+				senao escolher entre diagonal ou vertical
+				*/
 			}
 		}
-		else { //Diagonal
-			/*
-			Ver se a palavra cabe na diagonal
-			if (this->palavras[i].size() <=	min(DimX,DimY)) {
-				Diagonal
-			}
-			senao escolher entre diagonal ou vertical
-			*/
-		}
-		auxP.push_back(*i);
+		auxPal.push_back(*i);
 		palavras.erase(i);
 		i--;//Andar para o elemento anterior porque foi apagado o elemento 
 	}
-	this->palavras = auxP;
+	this->palavras = auxPal;
 }
 
 /*

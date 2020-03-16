@@ -51,3 +51,7 @@ int Letra::getTipo_M_m() {
 bool Letra::operator!=(char letra) {
 	return (this->getLetra() != letra) ? true : false;
 }
+
+bool Letra::operator!=(Letra letra) {
+	return (getLetra() != letra.getLetra()) ? 1 : 0;
+}

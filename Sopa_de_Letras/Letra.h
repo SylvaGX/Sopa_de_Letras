@@ -20,5 +20,6 @@ class Letra {
 		int getascii();
 		int getTipo_M_m();
 		bool operator!=(char letra);
+		bool operator!=(Letra letra);
 };
 

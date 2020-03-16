@@ -33,7 +33,6 @@ void Jogo::NewGame() {
 	this->jogador = new Jogador();
 	this->tabuleiro = new Tabuleiro();
 	this->tabuleiro->GenerarMatriz();
-	this->tabuleiro->loadPalavras();
 }
 
 void Jogo::SaveGame() {
