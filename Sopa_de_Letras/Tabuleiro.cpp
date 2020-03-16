@@ -112,8 +112,14 @@ void Tabuleiro::SelectPalavras(){
 		dir = rand() % 2;
 		if (dir == 0) { // Vertical
 			if (i->size() <= DimX) { //Por na vertical se menor do que DimX
-				if (vert.) {
+				if (!all_of(horz.begin(), horz.end(), [horz](int x) {return x == 1; })) {
 					//Verificar se tem palavras na posição que vou inserir a palavra
+					for (size_t i = 0; i < horz.size(); i++) {
+
+					}
+				}
+				else if(i->size() <= DimY) {//senão meter na horizontal ou diagonal
+
 				}
 			}
 			else if(i->size() <= DimY) {//Senão por na horizontal ou diagonal se menor do que DimY
@@ -148,10 +154,11 @@ void Tabuleiro::SelectPalavras(){
 
 /*
 
-* * * * 
-* * * *
-* * * *
-* * * *
+* * * * * *
+* * * * * *
+* * * * * *
+* * * * * *
+* * * * * *
 
 */
 
