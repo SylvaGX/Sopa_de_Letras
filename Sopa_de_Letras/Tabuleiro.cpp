@@ -103,16 +103,57 @@ void Tabuleiro::GenerarMatriz() {
 
 void Tabuleiro::SelectPalavras(){
 	vector<Palavra> auxP;
+	vector<int> vert(DimX, 0);
+	vector<int> horz(DimY, 0);
+	time_t t;
+	srand(time(&t));
+	int dir = 0;
 	for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
-		palavras.erase(i);
-		i--;//ir para tras porque foi apagado o elemento atual
-		/*
-		if (this->palavras[i].size() <=	min(DimX,DimY)) {
-			Diagonal
+		dir = rand() % 2;
+		if (dir == 0) { // Vertical
+			if (i->size() <= DimX) { //Por na vertical se menor do que DimX
+				if (vert.) {
+					//Verificar se tem palavras na posição que vou inserir a palavra
+				}
+			}
+			else if(i->size() <= DimY) {//Senão por na horizontal ou diagonal se menor do que DimY
+				//Se DimY < DimX decidir na horizontal ou diagonal
+				
+			}
+			//não por a palavra
 		}
-		*/
+		else if (dir == 1) { // Horizontal
+			if (i->size() <= DimY) {//Por na horizontal se menor do que DimY
+
+			}
+			else if (i->size() <= DimX) {//Senão por na vertical ou diagonal se menor do que DimX
+				//Se DimX < DimY decidir na vertical ou diagonal
+			}
+		}
+		else { //Diagonal
+			/*
+			Ver se a palavra cabe na diagonal
+			if (this->palavras[i].size() <=	min(DimX,DimY)) {
+				Diagonal
+			}
+			senao escolher entre diagonal ou vertical
+			*/
+		}
+		auxP.push_back(*i);
+		palavras.erase(i);
+		i--;//Andar para o elemento anterior porque foi apagado o elemento 
 	}
+	this->palavras = auxP;
 }
+
+/*
+
+* * * * 
+* * * *
+* * * *
+* * * *
+
+*/
 
 void Tabuleiro::Save(ofstream& os) {
 }

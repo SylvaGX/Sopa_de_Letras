@@ -3,6 +3,8 @@
 Palavra::Palavra() {
 	this->orientacao = -1;
 	this->estado = -1;
+	this->Ponto_ini = Ponto(-1, -1);
+	this->Ponto_ini = Ponto(-1, -1);
 }
 
 Palavra::Palavra(vector<Letra> m_palavra, int m_orientacao, int m_estado) {
@@ -20,18 +22,6 @@ void Palavra::setOrientacao(int orientacao) {
 
 void Palavra::setEstado(int estado) {
 	this->estado = estado;
-}
-
-vector<Letra> Palavra::getPalavra() {
-	return this->palavra;
-}
-
-int Palavra::getOrientacao() {
-	return this->orientacao;
-}
-
-int Palavra::getEstado() {
-	return this->estado;
 }
 
 void Palavra::showPalavra() {
