@@ -38,6 +38,7 @@ int main() {
 		cin.ignore();
 		switch (c) {
 			case '1':{
+				system("CLS");
 				gotoxy(0,0);
 				cout << "                       ";
 				gotoxy(1, 0);

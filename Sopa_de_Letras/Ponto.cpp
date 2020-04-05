@@ -45,19 +45,26 @@ void Ponto::ShowPonto(void) {
 	cout << "X: " << this->x << " Y: " << this->y << endl;
 }
 
-bool Ponto::operator==(const Ponto ponto) const {
-	return false;
+bool Ponto::operator==(const Ponto p) const {
+	return ((this->Get_x() == p.Get_x()) ? (this->Get_y() == p.Get_y()) ? 1 : 0 : 0);
 }
 
-bool Ponto::operator!=(const Ponto ponto) const {
-	return false;
+bool Ponto::operator!=(const Ponto p) const {
+	return !(*this == p);
 }
 
-void Ponto::operator=(Ponto ponto) {
+void Ponto::operator=(Ponto p) {
+	this->Set_x(p.Get_x());
+	this->Set_y(p.Get_y());
 }
 
 void Ponto::Save(ofstream& os) {
 }
 
 void Ponto::Read(ifstream& is) {
+}
+
+ostream& operator<<(ostream& os, const Ponto ponto) {
+	os << "x: " << ponto.Get_x() << "y: " << ponto.Get_y();
+	return os;
 }

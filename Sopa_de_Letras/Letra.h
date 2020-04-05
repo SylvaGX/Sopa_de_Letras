@@ -19,6 +19,7 @@ class Letra {
 		Ponto getPonto();
 		int getascii();
 		int getTipo_M_m();
+		static int verificaTipo(char c);
 		bool operator!=(char letra);
 		bool operator!=(Letra letra);
 };

@@ -32,6 +32,7 @@ Jogador* Jogo::getJogador() {
 void Jogo::NewGame() {
 	this->jogador = new Jogador();
 	this->tabuleiro = new Tabuleiro();
+	this->tabuleiro->loadPalavras();
 	this->tabuleiro->GenerarMatriz();
 }
 

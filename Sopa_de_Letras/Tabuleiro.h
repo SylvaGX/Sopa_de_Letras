@@ -7,6 +7,9 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <numeric>
+#include <random>
+#include <chrono>
 #include "Letra.h"
 #include "Palavra.h"
 
@@ -19,6 +22,7 @@ class Tabuleiro {
 		int DimY;
 		int nPalavras;
 		vector<Palavra> palavras;
+		bool GetSpace(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y);
 	public:
 		Tabuleiro();
 		Tabuleiro(vector<vector<Letra>> matrizLetras, int DimX, int DimY, int nPalavras, vector<Palavra> palavras);
@@ -34,6 +38,9 @@ class Tabuleiro {
 		void showPalavras();
 		bool loadPalavras();
 		void GenerarMatriz();
+		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y);
+		bool PutDiag(vector<Palavra>::iterator i, vector<pair<int, int>> Z);
+		void CountSpaceMatriz(vector<int> &X, vector<int> &Y);
 		void SelectPalavras();
 		void Save(ofstream& os);
 		void Read(ifstream& is);

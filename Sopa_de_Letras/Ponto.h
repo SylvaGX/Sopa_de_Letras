@@ -1,5 +1,6 @@
 #pragma once
 #include <fstream>
+#include <ostream>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class Ponto{
 		bool operator == (const Ponto ponto) const;
 		bool operator != (const Ponto ponto) const;
 		void operator = (Ponto ponto);
+		friend ostream& operator<< (ostream& os, const Ponto ponto);
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };

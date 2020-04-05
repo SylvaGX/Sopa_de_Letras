@@ -3,14 +3,14 @@
 Palavra::Palavra() {
 	this->orientacao = -1;
 	this->estado = -1;
-	this->Ponto_ini = Ponto(-1, -1);
-	this->Ponto_ini = Ponto(-1, -1);
+	this->pIni = Ponto(-1, -1);
 }
 
-Palavra::Palavra(vector<Letra> m_palavra, int m_orientacao, int m_estado) {
-	this->palavra = m_palavra;
-	this->orientacao = m_orientacao;
-	this->estado = m_estado;
+Palavra::Palavra(string palavra, int orientacao, int estado, Ponto pIni) {
+	this->palavra = palavra;
+	this->orientacao = orientacao;
+	this->estado = estado;
+	this->pIni = pIni;
 }
 
 Palavra::~Palavra() {
@@ -24,23 +24,18 @@ void Palavra::setEstado(int estado) {
 	this->estado = estado;
 }
 
+void Palavra::setPonto(Ponto pIni) {
+	this->pIni = pIni;
+}
+
 void Palavra::showPalavra() {
 	for (size_t i = 0; i < this->getPalavra().size(); i++) {
-		cout << this->getPalavra()[i].getLetra();
+		cout << this->getPalavra()[i];
 	}
-	cout << endl;
 }
 
 void Palavra::setPalavra(string str) {
-	int strl = str.length();
-	this->palavra.resize(strl);
-	for (int i = 0; i < strl; i++) {
-		this->palavra[i] = Letra(str[i], Ponto(-1,-1), (int)str[i], verificaTipo(str[i]));
-	}
-}
-
-int Palavra::verificaTipo(char c) {
-	return ((c >= 'a') && (c <= 'z')) ? 1 : ((c >= 'A') && (c <= 'Z')) ? 0 : -1;
+	this->palavra = str;
 }
 
 int Palavra::size() {
@@ -48,14 +43,5 @@ int Palavra::size() {
 }
 
 bool Palavra::operator==(string str2) {
-	int p = 0;
-	if (this->getPalavra().size() == str2.length()) {
-		p = 1;
-		for (size_t i = 0; (i < str2.length()) && p; i++) {
-			if (this->getPalavra()[i] != str2[i]) {
-				p = 0;
-			}
-		}
-	}
-	return p;
+	return (this->getPalavra() == str2);
 }
