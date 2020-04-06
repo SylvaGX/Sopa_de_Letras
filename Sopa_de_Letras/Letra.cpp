@@ -1,5 +1,7 @@
 #include "Letra.h"
 
+int Letra::tipo_M_m = -1;
+
 Letra::Letra() {
 	this->letra = '-';
 	this->ascii = -1;
@@ -28,24 +30,16 @@ void Letra::setAscii(int ascii) {
 	this->ascii = ascii;
 }
 
-void Letra::setTipo_M_m(int tipo_M_m) {
-	this->tipo_M_m = tipo_M_m;
+void Letra::setBold(int bold) {
+	this->bold = bold;
 }
 
-char Letra::getLetra() {
-	return this->letra;
+void Letra::setCor(int cor) {
+	this->cor = cor;
 }
 
-Ponto Letra::getPonto() {
-	return this->ponto;
-}
-
-int Letra::getascii() {
-	return this->ascii;
-}
-
-int Letra::getTipo_M_m() {
-	return this->tipo_M_m;
+void Letra::setTipo_M_m(int ntipo_M_m) {
+	tipo_M_m = ntipo_M_m;
 }
 
 int Letra::verificaTipo(char c) {
