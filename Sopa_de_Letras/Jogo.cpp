@@ -14,7 +14,6 @@ Jogo::~Jogo() {
 //Loop do jogo
 void Jogo::init() {
 	this->tabuleiro->Draw();
-	this->tabuleiro->showPalavras();
 	cout << this->jogador;
 	cout << this->jogador->GetPontos() << endl;
 	(*(this->jogador))++;
