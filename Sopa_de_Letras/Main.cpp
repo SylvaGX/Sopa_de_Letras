@@ -20,8 +20,10 @@ void gotoxy(short x, short y) {
 }
 
 int main() {
+	HANDLE outcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	//get the dimension of the terminal
+	GetConsoleScreenBufferInfo(outcon, &csbi);
 	int w = csbi.dwSize.X;//Colunsa da janela
 	int h = csbi.dwSize.Y;//Linhas da janela
 	setlocale(LC_ALL, "");
