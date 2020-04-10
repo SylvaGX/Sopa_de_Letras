@@ -82,8 +82,6 @@ void Tabuleiro::showPalavras() {
 bool Tabuleiro::loadPalavras() {
 	ifstream is;
 	is.open("words.txt");
-	srand((unsigned)time(nullptr));
-	int r = rand() % 2;
 	if (is) {
 		string aux;
 		while (!is.eof()) {
@@ -97,13 +95,11 @@ bool Tabuleiro::loadPalavras() {
 					i++;
 				}
 			}
-			if (r) {
+			if (Letra::getTipo_M_m() == 0) {
 				transform(aux.begin(), aux.end(), aux.begin(), ::toupper);
-				Letra::setTipo_M_m(0);
 			}
 			else {
 				transform(aux.begin(), aux.end(), aux.begin(), ::tolower);
-				Letra::setTipo_M_m(1);
 			}
 			this->palavras.push_back(Palavra(aux, -1, 0, Ponto(-1, -1)));
 		}
@@ -124,7 +120,7 @@ void Tabuleiro::GenerarMatriz() {
 
 	for (int i = 0; i < this->DimY; i++) {
 		for (int j = 0; j < this->DimX; j++) {
-				this->matrizLetras[i][j] = Letra(' ', Ponto(i, j), 32, -1);
+				this->matrizLetras[i][j] = Letra(' ', Ponto(i, j), 32, 0, 0);
 		}
 	}
 
@@ -138,7 +134,6 @@ void Tabuleiro::GenerarMatriz() {
 				aux = caracteres[r];
 				this->matrizLetras[i][j].setLetra(aux);
 				this->matrizLetras[i][j].setAscii(Letra::toAscii(aux));
-				this->matrizLetras[i][j].setTipo_M_m(Letra::getTipo_M_m());
 			}
 		}
 	}
@@ -418,7 +413,7 @@ bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y)
 				p->setOrientacao(0);
 				p->setPonto(Ponto(x, y));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[i], Ponto(x + i, y), (int)(*p).getPalavra()[i], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[i], Ponto(x + i, y), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y][x + i] = laux;
 				}
 				break;
@@ -429,7 +424,7 @@ bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y)
 				p->setOrientacao(1);
 				p->setPonto(Ponto((x + p->getPalavra().size() - 1), y));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x + i, y), (int)(*p).getPalavra()[l - i - 1], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x + i, y), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y][x + i] = laux;
 				}
 				break;
@@ -440,7 +435,7 @@ bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y)
 				p->setOrientacao(2);
 				p->setPonto(Ponto(x, y));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[i], Ponto(x, y + i), (int)(*p).getPalavra()[i], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[i], Ponto(x, y + i), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y + i][x] = laux;
 				}
 				break;
@@ -451,7 +446,7 @@ bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y)
 				p->setOrientacao(3);
 				p->setPonto(Ponto(x, (y + p->getPalavra().size() - 1)));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x, y + i), (int)(*p).getPalavra()[l - i - 1], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x, y + i), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y + i][x] = laux;
 				}
 				break;
@@ -484,7 +479,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setOrientacao(4);
 				p->setPonto(Ponto(x, y));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[i], Ponto(x + i, y + i), (int)(*p).getPalavra()[i], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[i], Ponto(x + i, y + i), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y + i][x + i] = laux;
 				}
 				break;
@@ -495,7 +490,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setOrientacao(5);
 				p->setPonto(Ponto((x + p->getPalavra().size() - 1), (y + p->getPalavra().size() - 1)));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x + i, y + i), (int)(*p).getPalavra()[l - i - 1], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x + i, y + i), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y + i][x + i] = laux;
 				}
 				break;
@@ -506,7 +501,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setOrientacao(6);
 				p->setPonto(Ponto(x, y));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[i], Ponto(x - i, y + i), (int)(*p).getPalavra()[i], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[i], Ponto(x - i, y + i), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y + i][x - i] = laux;
 				}
 				break;
@@ -517,7 +512,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setOrientacao(7);
 				p->setPonto(Ponto((x - p->getPalavra().size() - 1), (y + p->getPalavra().size() - 1)));
 				for (size_t i = 0; i < l; i++) {
-					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x - i, y + i), (int)(*p).getPalavra()[l - i - 1], Letra::getTipo_M_m());
+					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x - i, y + i), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y + i][x - i] = laux;
 				}
 				break;
@@ -531,6 +526,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 
 void Tabuleiro::SelectPalavras(){
 	srand((unsigned)time(nullptr));
+	cout << Letra::getTipo_M_m() << endl;
 	int dir = 0;
 	vector<Palavra> auxPal;
 	vector<int> X(DimX);//palavras possiveis na posição respetiva(Vertical)

@@ -1,4 +1,5 @@
 #pragma once
+#include <time.h>
 #include "Ponto.h"
 
 class Letra {
@@ -11,19 +12,20 @@ class Letra {
 		int cor;//0 - branco, 1 - verde
 	public:
 		Letra();
-		Letra(char m_letra, Ponto m_ponto, int m_ascii, int m_tipo_M_m);
+		Letra(char m_letra, Ponto m_ponto, int m_ascii, int bold, int cor);
 		virtual ~Letra();
 		void setLetra(char letra);
 		void setPonto(Ponto ponto);
 		void setAscii(int ascii);
 		void setBold(int bold);
 		void setCor(int cor);
-		static void setTipo_M_m(int tipo_M_m);
+		static void setTipo_M_m(int ntipo_M_m);
 		char getLetra() { return this->letra; };
 		Ponto getPonto() { return this->ponto; };
 		int getAscii() { return this->ascii; };
 		int getBold() { return this->bold; };
 		int getCor() { return this->cor; };
+		static int generateM_m();
 		static int toAscii(char c) { return ((int)c); };
 		static int getTipo_M_m() { return tipo_M_m; };
 		static int verificaTipo(char c);

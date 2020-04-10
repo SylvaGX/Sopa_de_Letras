@@ -1,18 +1,20 @@
 #include "Letra.h"
 
-int Letra::tipo_M_m = -1;
+int Letra::tipo_M_m{Letra::generateM_m()};
 
 Letra::Letra() {
 	this->letra = '-';
 	this->ascii = -1;
-	this->tipo_M_m = -1;
+	this->bold = -1;
+	this->cor = -1;
 }
 
-Letra::Letra(char m_letra, Ponto m_ponto, int m_ascii, int m_tipo_M_m) {
+Letra::Letra(char m_letra, Ponto m_ponto, int m_ascii, int bold, int cor) {
 	this->letra = m_letra;
 	this->ponto = m_ponto;
 	this->ascii = m_ascii;
-	this->tipo_M_m = m_tipo_M_m;
+	this->bold = bold;
+	this->cor = cor;
 }
 
 Letra::~Letra() {
@@ -39,7 +41,12 @@ void Letra::setCor(int cor) {
 }
 
 void Letra::setTipo_M_m(int ntipo_M_m) {
-	tipo_M_m = ntipo_M_m;
+	Letra::tipo_M_m = ntipo_M_m;
+}
+
+int Letra::generateM_m() {
+	srand((unsigned)time(nullptr));
+	return (rand() % 2);
 }
 
 int Letra::verificaTipo(char c) {
@@ -51,5 +58,5 @@ bool Letra::operator!=(char letra) {
 }
 
 bool Letra::operator!=(Letra letra) {
-	return (getLetra() != letra.getLetra()) ? 1 : 0;
+	return (getLetra() != letra.getLetra()) ? true : false;
 }
