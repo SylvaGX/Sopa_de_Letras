@@ -24,7 +24,10 @@ class Palavra {
 		Ponto getPonto() { return pIni; };
 		void showPalavra();
 		void setPalavra(string str);
-		int size();
+		static string pedirpalavra();
+		size_t size();
 		bool operator== (string str2);
+		bool operator<(Palavra str);
+		bool operator>(Palavra str);
 };
 

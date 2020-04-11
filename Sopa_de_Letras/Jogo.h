@@ -9,10 +9,10 @@ class Jogo {
 	public:
 		Jogo();
 		virtual ~Jogo();
-		void init(); //função do jogo
+		void init(); //função que inicializa o jog
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
-		void NewGame();
+		void loop();//loop do jogo
 		void SaveGame();
 		void LoadGame();
 };

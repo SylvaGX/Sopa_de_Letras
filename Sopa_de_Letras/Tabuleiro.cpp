@@ -12,7 +12,7 @@ Tabuleiro::Tabuleiro() {
 	this->nPalavras = -1;
 }
 
-Tabuleiro::Tabuleiro(vector<vector<Letra>> matrizLetras, int DimX, int DimY, int nPalavras, vector<Palavra> palavras) {
+Tabuleiro::Tabuleiro(vector<vector<Letra>> matrizLetras, size_t DimX, size_t DimY, int nPalavras, vector<Palavra> palavras) {
 	this->matrizLetras = matrizLetras;
 	this->DimX = DimX;
 	this->DimY = DimY;
@@ -42,11 +42,11 @@ void Tabuleiro::Draw() {
 	cout << endl;
 }
 
-void Tabuleiro::setDimX(int DimX) {
+void Tabuleiro::setDimX(size_t DimX) {
 	this->DimX = DimX;
 }
 
-void Tabuleiro::setDimY(int DimY) {
+void Tabuleiro::setDimY(size_t DimY) {
 	this->DimY = DimY;
 }
 
@@ -261,17 +261,17 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 		}
 	}
 	else {
-		int numDiagY = 0;
-		int numDiagX = 0;
+		size_t numDiagY = 0;
+		size_t numDiagX = 0;
 		if (DimX < DimY) {
-			numDiagY = DimY - DimX;
+			numDiagY = (size_t)(DimY - DimX);
 		}
 		else if(DimY < DimX){
-			numDiagX = DimX - DimY;
+			numDiagX = (size_t)(DimX - DimY);
 		}
-		int l = 0;
-		int maxlen = 0;
-		int i = 0;
+		size_t l = 0;
+		size_t maxlen = 0;
+		size_t i = 0;
 		bool DP = true;
 		bool DPR = true;
 		bool DS = true;
@@ -290,7 +290,7 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 				else {
 					maxlen += numDiagX - (strlen - 1);
 				}
-				for (int k = 0; k < maxlen; k++) {
+				for (size_t k = 0; k < maxlen; k++) {
 					for (j = 0; j < strlen && (DP || DPR || DS || DSR); j++) {
 						if (p->getPalavra()[j] != this->matrizLetras[l + k + j][i + k + j].getLetra() && this->matrizLetras[l + k + j][i + k + j].getLetra() != ' ') {
 							DP = false;
@@ -524,6 +524,34 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 	return ok;
 }
 
+int partition(vector<Palavra>& p, int left, int right) {
+	int pivotIndex = left + (right - left) / 2;
+	Palavra pivotValue = p[pivotIndex];
+	int i = left, j = right;
+	while (i <= j) {
+		while (p[i] < pivotValue) {
+			i++;
+		}
+		while (p[j] > pivotValue) {
+			j--;
+		}
+		if (i <= j) {
+			swap(p[i], p[j]);
+			i++;
+			j--;
+		}
+	}
+	return i;
+}
+
+void quicksort(vector<Palavra>& p, int left, int right) {
+	if (left < right) {
+		int pivotIndex = partition(p, left, right);
+		quicksort(p, left, pivotIndex - 1);
+		quicksort(p, pivotIndex, right);
+	}
+}
+
 void Tabuleiro::SelectPalavras(){
 	srand((unsigned)time(nullptr));
 	cout << Letra::getTipo_M_m() << endl;
@@ -738,7 +766,99 @@ void Tabuleiro::SelectPalavras(){
 			CountSpaceMatriz(X, Y);
 		}
 	}
+	quicksort(auxPal, 0, auxPal.size()-1);
 	this->setPalavras(auxPal);
+}
+
+void Tabuleiro::VerificarPalavra(string str) {
+	if (!str.empty()) {
+		vector<Palavra>::iterator ptr;
+		size_t strlen = 0;
+		int x = 0, y = 0;
+		for (ptr = this->getPalavras().begin(); ptr != this->getPalavras().end(); ptr++) {
+			if (ptr->getPalavra() == str) {
+				cout << "Acertou a palavra";
+				ptr->setEstado(1);
+				switch (ptr->getOrientacao()) {
+					case 0://HE-HD
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y][x + i].setBold(1);
+							this->getMatrizLetras()[y][x + i].setCor(1);
+						}
+						break;
+					case 1://HD-HE
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y][x - i].setBold(1);
+							this->getMatrizLetras()[y][x - i].setCor(1);
+						}
+						break;
+					case 2://VC - VB
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y + i][x].setBold(1);
+							this->getMatrizLetras()[y + i][x].setCor(1);
+						}
+						break;
+					case 3://VB-VC
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y - i][x].setBold(1);
+							this->getMatrizLetras()[y - i][x].setCor(1);
+						}
+						break;
+					case 4://D1C - D1B
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y + i][x + i].setBold(1);
+							this->getMatrizLetras()[y + i][x + i].setCor(1);
+						}
+						break;
+					case 5://D1B-D1C
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y - i][x - i].setBold(1);
+							this->getMatrizLetras()[y - i][x - i].setCor(1);
+						}
+						break;
+					case 6://D2C-D2B
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y + i][x - i].setBold(1);
+							this->getMatrizLetras()[y + i][x - i].setCor(1);
+						}
+						break;
+					case 7://D2B-D2C
+						x = ptr->getPonto().Get_x();
+						y = ptr->getPonto().Get_y();
+						strlen = ptr->size();
+						for (size_t i = 0; i < strlen; i++) {
+							this->getMatrizLetras()[y - i][x + i].setBold(1);
+							this->getMatrizLetras()[y - i][x + i].setCor(1);
+						}
+						break;
+				}
+			}
+		}
+		if (ptr == this->getPalavras().end())
+			cout << "Errou a palavra";
+	}
+	else cout << "Escreva uma palavra";
 }
 
 void Tabuleiro::Save(ofstream& os) {

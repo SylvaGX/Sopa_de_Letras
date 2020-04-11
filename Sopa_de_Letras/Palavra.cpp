@@ -38,10 +38,25 @@ void Palavra::setPalavra(string str) {
 	this->palavra = str;
 }
 
-int Palavra::size() {
+string Palavra::pedirpalavra() {
+	string pedir;
+	cout << "Qual é a palavra que queres advinhar?\n->";
+	cin >> pedir;
+	return pedir;
+}
+
+size_t Palavra::size() {
 	return (palavra.size());
 }
 
 bool Palavra::operator==(string str2) {
 	return (this->getPalavra() == str2);
+}
+
+bool Palavra::operator<(Palavra str) {
+	return (this->getPalavra() < str.getPalavra());
+}
+
+bool Palavra::operator>(Palavra str) {
+	return (this->getPalavra() > str.getPalavra());
 }

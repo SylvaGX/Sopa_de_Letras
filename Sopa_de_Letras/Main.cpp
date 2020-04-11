@@ -58,8 +58,8 @@ int main() {
 				gotoxy(7, 0);
 				cout << "    ";
 				gotoxy(0, 0);
-				jogo.NewGame();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
-				jogo.init();//Loop do jogo
+				jogo.init();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
+				jogo.loop();//Loop do jogo
 				break;
 			}
 			case '2':{

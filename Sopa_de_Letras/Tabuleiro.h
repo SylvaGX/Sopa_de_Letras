@@ -16,18 +16,18 @@ using namespace std;
 class Tabuleiro {
 	private:
 		vector<vector<Letra>> matrizLetras;
-		int DimX;
-		int DimY;
+		size_t DimX;
+		size_t DimY;
 		int nPalavras;
 		vector<Palavra> palavras;
 		bool GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y);
 	public:
 		Tabuleiro();
-		Tabuleiro(vector<vector<Letra>> matrizLetras, int DimX, int DimY, int nPalavras, vector<Palavra> palavras);
+		Tabuleiro(vector<vector<Letra>> matrizLetras, size_t DimX, size_t DimY, int nPalavras, vector<Palavra> palavras);
 		virtual ~Tabuleiro();
 		void Draw();
-		void setDimX(int DimX);
-		void setDimY(int DimY);
+		void setDimX(size_t DimX);
+		void setDimY(size_t DimY);
 		void set_nPalavras(int nPalavras);
 		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
 		void setPalavras(vector<Palavra> palavras);
@@ -40,6 +40,7 @@ class Tabuleiro {
 		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y);
 		bool PutDiag(vector<Palavra>::iterator p);
 		void SelectPalavras();
+		void VerificarPalavra(string str);
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };
