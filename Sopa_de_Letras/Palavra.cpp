@@ -29,7 +29,7 @@ void Palavra::setPonto(Ponto pIni) {
 }
 
 void Palavra::showPalavra() {
-	for (size_t i = 0; i < this->getPalavra().size(); i++) {
+	for (size_t i = 0; i < this->size(); i++) {
 		cout << this->getPalavra()[i];
 	}
 }
@@ -42,6 +42,13 @@ string Palavra::pedirpalavra() {
 	string pedir;
 	cout << "Qual é a palavra que queres advinhar?\n->";
 	cin >> pedir;
+	if (Letra::getTipo_M_m() == 0) {
+		transform(pedir.begin(), pedir.end(), pedir.begin(), ::toupper);
+	}
+	else {
+		transform(pedir.begin(), pedir.end(), pedir.begin(), ::tolower);
+	}
+	cout << pedir << endl;
 	return pedir;
 }
 

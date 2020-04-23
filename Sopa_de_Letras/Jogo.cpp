@@ -13,15 +13,24 @@ Jogo::~Jogo() {
 
 //Loop do jogo
 void Jogo::loop() {
-	this->tabuleiro->Draw();
 	int j = 0;
 	int l = 1;
 	while (l) {
-		cout << "1-Tentar acertar a palavra\n2-Save do jogo\n3-Sair\n";
+		this->tabuleiro->Draw();
+		cout << "1-Tentar acertar a palavra\n2-Save do jogo\n0-Sair\n";
 		cin >> j;
 		switch (j) {
 			case 1:{
 				string ask = Palavra::pedirpalavra();
+				this->getTabuleiro()->VerificarPalavra(ask);
+				//system("CLS");
+				break;
+			}
+			case 2:{
+				break;
+			}
+			case 0:{
+				l = 0;
 				break;
 			}
 		}

@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <locale>
+#include <algorithm>
+#include <string>
 #include <vector>
 #include "Letra.h"
 

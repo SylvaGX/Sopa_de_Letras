@@ -26,12 +26,14 @@ int main() {
 	GetConsoleScreenBufferInfo(outcon, &csbi);
 	int w = csbi.dwSize.X;//Colunsa da janela
 	int h = csbi.dwSize.Y;//Linhas da janela
-	setlocale(LC_ALL, "");
+	cout << setlocale(LC_ALL, NULL) << endl;
+	locale::global(locale(""));
+	cout << setlocale(LC_ALL, NULL) << endl;
 	Jogo jogo;
 	char c;
 	int l = 1;
 	while (l) {
-		cout << "Esta no jogo de LeTraS\n";
+		cout << "Está no jogo de LeTraS\n";
 		cout << "----------------------\n";
 		cout << "----------------------\n";
 		cout << "----------------------\n";

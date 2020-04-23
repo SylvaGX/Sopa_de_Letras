@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <windows.h>
 #include <time.h>
 #include <string>
 #include <algorithm>
