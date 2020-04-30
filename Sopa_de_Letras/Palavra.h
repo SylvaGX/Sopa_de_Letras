@@ -27,7 +27,8 @@ class Palavra {
 		Ponto getPonto() { return pIni; };
 		void showPalavra();
 		void setPalavra(string str);
-		static string pedirpalavra();
+		static string pedirpalavra(size_t DimX, size_t DimY);
+		static void CheckWordAccents(string &str);
 		size_t size();
 		bool operator== (string str2);
 		bool operator<(Palavra str);

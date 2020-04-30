@@ -26,7 +26,7 @@ class Letra {
 		int getBold() { return this->bold; };
 		int getCor() { return this->cor; };
 		static int generateM_m();
-		static int toAscii(char c) { return ((int)c); };
+		//static int toAscii(char c) { return ((int)c); };
 		static int getTipo_M_m() { return tipo_M_m; };
 		static int verificaTipo(char c);
 		bool operator!=(char letra);

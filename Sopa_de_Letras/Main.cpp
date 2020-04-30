@@ -12,24 +12,15 @@
 #include "Experiente.h"
 #include "Main.h"
 
+
 using namespace std;
 
-void gotoxy(short x, short y) {
-	COORD coord = {y, x};
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
 int main() {
-	HANDLE outcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	//get the dimension of the terminal
-	GetConsoleScreenBufferInfo(outcon, &csbi);
-	int w = csbi.dwSize.X;//Colunsa da janela
-	int h = csbi.dwSize.Y;//Linhas da janela
-	cout << setlocale(LC_ALL, NULL) << endl;
+	Ponto::UpdateColWin();
+	int w = Ponto::getWinW();//Colunsa da janela
+	int h = Ponto::getWinW();//Linhas da janela
 	locale::global(locale(""));
-	cout << setlocale(LC_ALL, NULL) << endl;
-	Jogo jogo;
+	Jogo *jogo;
 	char c;
 	int l = 1;
 	while (l) {
@@ -43,25 +34,28 @@ int main() {
 		switch (c) {
 			case '1':{
 				system("CLS");
-				gotoxy(0,0);
+				Ponto::gotoxy(0,0);
 				cout << "                       ";
-				gotoxy(1, 0);
+				Ponto::gotoxy(1, 0);
 				cout << "                       ";
-				gotoxy(2, 0);
+				Ponto::gotoxy(2, 0);
 				cout << "                       ";
-				gotoxy(3, 0);
+				Ponto::gotoxy(3, 0);
 				cout << "                       ";
-				gotoxy(4, 0);
+				Ponto::gotoxy(4, 0);
 				cout << "              ";
-				gotoxy(5, 0);
+				Ponto::gotoxy(5, 0);
 				cout << "                  ";
-				gotoxy(6, 0);
+				Ponto::gotoxy(6, 0);
 				cout << "         ";
-				gotoxy(7, 0);
+				Ponto::gotoxy(7, 0);
 				cout << "    ";
-				gotoxy(0, 0);
-				jogo.init();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
-				jogo.loop();//Loop do jogo
+				Ponto::gotoxy(0, 0);
+				jogo = new Jogo();
+				jogo->init();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
+				jogo->loop();//Loop do jogo
+				delete jogo;
+				system("CLS");
 				break;
 			}
 			case '2':{

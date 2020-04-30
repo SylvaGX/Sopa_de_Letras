@@ -9,6 +9,7 @@
 #include <numeric>
 #include <random>
 #include <chrono>
+#include "Jogador.h"
 #include "Letra.h"
 #include "Palavra.h"
 
@@ -21,6 +22,7 @@ class Tabuleiro {
 		size_t DimY;
 		int nPalavras;
 		vector<Palavra> palavras;
+		vector<Palavra> guessWords;
 		bool GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y);
 	public:
 		Tabuleiro();
@@ -32,6 +34,8 @@ class Tabuleiro {
 		void set_nPalavras(int nPalavras);
 		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
 		void setPalavras(vector<Palavra> palavras);
+		size_t getDimX() { return DimX; };
+		size_t getDimY() { return DimY; };
 		vector<vector<Letra>> getMatrizLetras();
 		vector<Palavra> getPalavras();
 		void showPalavras();
@@ -41,7 +45,7 @@ class Tabuleiro {
 		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y);
 		bool PutDiag(vector<Palavra>::iterator p);
 		void SelectPalavras();
-		void VerificarPalavra(string str);
+		string VerificarPalavra(string str, Jogador &jog);
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };

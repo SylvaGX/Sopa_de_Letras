@@ -1,6 +1,7 @@
 #include "Ponto.h"
-#include <iostream>
 
+int Ponto::w{0};
+int Ponto::h{0};
 
 Ponto::Ponto() {
 	this->x = -1; 
@@ -31,6 +32,20 @@ void Ponto::Set_P(int m_x, int m_y) {
 void Ponto::Set_P(Ponto m_P) {
 	this->x = m_P.Get_x();
 	this->y = m_P.Get_y();
+}
+
+void Ponto::UpdateColWin() {
+	HANDLE outcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	//get the dimension of the terminal
+	GetConsoleScreenBufferInfo(outcon, &csbi);
+	Ponto::w = csbi.dwSize.X;
+	Ponto::h = csbi.dwSize.Y;
+}
+
+void Ponto::gotoxy(short x, short y) {
+	COORD coord = {y, x};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 bool Ponto::Ask2Set_P(void) {

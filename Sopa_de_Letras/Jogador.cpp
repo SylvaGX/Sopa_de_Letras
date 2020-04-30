@@ -54,6 +54,6 @@ void Jogador::operator++(int p) {
 }
 
 ostream& operator<<(ostream& os, const Jogador *jog) {
-	os << jog->GetNome() << endl << jog->GetIdade() << endl;
+	os << jog->GetNome() << endl << jog->GetIdade();
 	return os;
 }

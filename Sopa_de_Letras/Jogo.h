@@ -8,7 +8,7 @@ class Jogo {
 		Jogador *jogador;
 	public:
 		Jogo();
-		virtual ~Jogo();
+		~Jogo();
 		void init(); //função que inicializa o jog
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
