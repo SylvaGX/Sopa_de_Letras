@@ -42,19 +42,19 @@ string Palavra::pedirpalavra(size_t DimX, size_t DimY) {
 	Ponto::UpdateColWin();
 	int w = Ponto::getWinW();
 	int h = Ponto::getWinH();
-	Ponto::gotoxy((short)DimY + 3, 0);
+	Ponto::gotoxy(0, (short)DimY + 3);
+	cout << "Qual é a palavra que queres advinhar?                           ";
+	Ponto::gotoxy(0, (short)DimY + 4);
 	cout << "                                                                ";
-	Ponto::gotoxy((short)DimY + 4, 0);
+	Ponto::gotoxy(0, (short)DimY + 5);
 	cout << "                                                                ";
-	Ponto::gotoxy((short)DimY + 5, 0);
+	Ponto::gotoxy(0, (short)DimY + 6);
 	cout << "                                                                ";
-	Ponto::gotoxy((short)DimY + 6, 0);
+	Ponto::gotoxy(0, (short)DimY + 7);
 	cout << "                                                                ";
-	Ponto::gotoxy((short)DimY + 7, 0);
-	cout << "                                                                ";
-	Ponto::gotoxy((short)DimY + 3, 0);
+	Ponto::gotoxy(0, (short)DimY + 4);
+	cout << "->";
 	string pedir;
-	cout << "Qual é a palavra que queres advinhar?\n->";
 	cin >> pedir;
 	if (Letra::getTipo_M_m() == 0) {
 		transform(pedir.begin(), pedir.end(), pedir.begin(), ::toupper);

@@ -54,7 +54,7 @@ int main() {
 				jogo = new Jogo();
 				jogo->init();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
 				jogo->loop();//Loop do jogo
-				delete jogo;
+				delete jogo;//Apagar o jogo
 				system("CLS");
 				break;
 			}

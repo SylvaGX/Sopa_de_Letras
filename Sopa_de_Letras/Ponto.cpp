@@ -44,12 +44,21 @@ void Ponto::UpdateColWin() {
 }
 
 void Ponto::gotoxy(short x, short y) {
-	COORD coord = {y, x};
+	COORD coord = {x, y};
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-bool Ponto::Ask2Set_P(void) {
-	return false;
+pair<int, int> Ponto::AskPonto(size_t DimY) {
+	pair<size_t, size_t> i;
+	size_t x, y;
+	gotoxy(0, (short)DimY + 3);
+	cout << "Digite a posição da palavra:                                    \n";
+	cout << "Digite a posição x\n->";
+	cin >> x;
+	cout << "Digite a posição y\n->";
+	cin >> y;
+	i = make_pair(x, y);
+	return i;
 }
 
 bool Ponto::IsValid(void) {

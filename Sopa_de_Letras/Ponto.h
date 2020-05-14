@@ -22,7 +22,7 @@ class Ponto{
 		void Set_P(Ponto m_P);
 		static void UpdateColWin();
 		static void gotoxy(short x, short y);
-		bool Ask2Set_P(void);
+		static pair<int, int> AskPonto(size_t DimY);
 		int Get_x(void) const { return x; }
 		int Get_y(void) const { return y; }
 		static int getWinW() { return Ponto::w; };

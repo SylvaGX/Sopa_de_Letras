@@ -45,7 +45,7 @@ class Tabuleiro {
 		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y);
 		bool PutDiag(vector<Palavra>::iterator p);
 		void SelectPalavras();
-		string VerificarPalavra(string str, Jogador &jog);
+		int VerificarPalavra(string str, Jogador &jog);
 		void Save(ofstream& os);
 		void Read(ifstream& is);
 };
