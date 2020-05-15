@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Jogo.h"
 
 using namespace std;
@@ -6,6 +5,7 @@ using namespace std;
 Jogo::Jogo(){
 	this->jogador = NULL;
 	this->tabuleiro = NULL;
+	this->namefile = "";
 }
 
 Jogo::~Jogo() {
@@ -124,6 +124,38 @@ bool Jogo::init() {
 }
 
 void Jogo::SaveGame() {
+	ofstream ofs;
+	string aux = "";
+	
+	if (namefile == "") {
+		time_t now = time(0);
+
+		tm* ltm = localtime(&now);
+		// print various components of tm structure.
+		if (ltm->tm_hour < 10) {
+			aux += "0" + to_string(ltm->tm_hour) + ":";
+		}
+		else aux += to_string(ltm->tm_hour) + ":";
+		if (ltm->tm_min < 10) {
+			aux += "0" + to_string(ltm->tm_min) + ":";
+		}
+		else aux += to_string(ltm->tm_min) + ":";
+		if (ltm->tm_sec < 10) {
+			aux += "0" + to_string(ltm->tm_sec) + " ";
+		}
+		else aux += to_string(ltm->tm_sec) + " ";
+		if (ltm->tm_mday < 10) {
+			aux += "0" + to_string(ltm->tm_mday) + "/";
+		}
+		else aux += to_string(ltm->tm_mday) + "/";
+		if (ltm->tm_mon < 10) {
+			aux += "0" + to_string(ltm->tm_mon) + "/";
+		}
+		else aux += to_string(ltm->tm_mon) + "/";
+		aux += to_string(ltm->tm_year) + ".sopa";
+	}
+	else aux = namefile;
+	ofs.open(aux);
 }
 
 void Jogo::LoadGame() {
