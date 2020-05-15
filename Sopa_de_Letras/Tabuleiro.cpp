@@ -108,33 +108,67 @@ void Tabuleiro::showPalavras() {
 bool Tabuleiro::loadPalavras() {
 	ifstream is;
 	is.open("words.txt");
+	bool err = false;
 	if (is) {
+		vector<pair<streampos, string>> cat;
 		string aux;
-		size_t i = 0;
+		bool c = false;
 		while (!is.eof()) {
 			getline(is, aux);
-			i = 0;
-			while (i < aux.length()) {
-				if (aux[i] == ' ') {
-					aux.erase(i, 1);
+			if (aux != "") {
+				if (c) {
+					if (aux.size() > 1 && aux[0] == '/' && aux[1] == '#') {
+						c = false;
+					}
+					else if (aux[0] == '#') {
+						//erro ao ler o ficheiro. Formato não reconhecido
+						err = true;
+					}
 				}
 				else {
-					i++;
+					if (aux[0] == '#') {
+						cat.push_back(make_pair(is.tellg(), aux.substr(1)));
+						c = true;
+					}
 				}
 			}
-			if (Letra::getTipo_M_m() == 0) {
-				transform(aux.begin(), aux.end(), aux.begin(), ::toupper);
+		}
+		if (!c) {
+			size_t i = 0;
+			size_t r = 0;
+			r = rand() % cat.size();
+			categoria = cat.at(r).second;
+			is.seekg(cat.at(r).first);
+			aux = "";
+			getline(is, aux);
+			while (aux != "/#") {
+				while (i < aux.length()) {
+					if (aux[i] == ' ') {
+						aux.erase(i, 1);
+					}
+					else {
+						i++;
+					}
+				}
+				if (Letra::getTipo_M_m() == 0) {
+					transform(aux.begin(), aux.end(), aux.begin(), ::toupper);
+				}
+				else {
+					transform(aux.begin(), aux.end(), aux.begin(), ::tolower);
+				}
+				Palavra::CheckWordAccents(aux);
+				this->palavras.push_back(Palavra(aux, -1, 0, Ponto(-1, -1)));
+				i = 0;
+				getline(is, aux);
 			}
-			else {
-				transform(aux.begin(), aux.end(), aux.begin(), ::tolower);
-			}
-			Palavra::CheckWordAccents(aux);
-			this->palavras.push_back(Palavra(aux, -1, 0, Ponto(-1, -1)));
+			unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
+			std::shuffle(this->palavras.begin(), this->palavras.end(), default_random_engine(seed));
+		}
+		else {
+			err = true;
 		}
 	}
-	unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-	shuffle(this->palavras.begin(), this->palavras.end(), default_random_engine(seed));
-	return false;
+	return err;
 }
 
 void Tabuleiro::GenerarMatriz() {

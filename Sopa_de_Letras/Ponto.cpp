@@ -51,7 +51,7 @@ void Ponto::gotoxy(short x, short y) {
 pair<int, int> Ponto::AskPonto(size_t DimY) {
 	pair<size_t, size_t> i;
 	size_t x, y;
-	gotoxy(0, (short)DimY + 3);
+	gotoxy(0, (short)DimY + 4);
 	cout << "Digite a posição da palavra:                                    \n";
 	cout << "Digite a posição x\n->";
 	cin >> x;

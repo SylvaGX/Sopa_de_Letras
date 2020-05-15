@@ -20,6 +20,7 @@ void Jogo::loop() {
 	string ask = "";
 	int sms = 0;
 	this->tabuleiro->Draw();
+	cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 	cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
 	cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n";
 	while (l && !this->getTabuleiro()->getPalavras().empty()) {
@@ -33,7 +34,7 @@ void Jogo::loop() {
 					case 2:
 					case 3:
 					case 4:{
-						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 3);
+						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 						if (sms == 0) {
 							cout << "Escreva uma palavra!!!                                        \n";
 						}
@@ -49,22 +50,23 @@ void Jogo::loop() {
 						else {
 							cout << "Insira coordenadas validas!!!                                 \n";
 						}
-						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
+						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
 						for (size_t i = 0; i < ask.length(); i++) 
 							cout << " ";
-						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
+						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
 						cout << "1 - Tentar acertar a palavra\n";
 						cout << "2 - Save do jogo                                                  \n";
 						cout << "0 - Sair                                                          \n";
-						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 7);
+						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 						cout << "                                                                    ";
-						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 7);
+						Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 						cout << "->";
 						break;
 					}
 					case 1:{
 						system("CLS");
 						this->tabuleiro->Draw();
+						cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 						cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
 						cout << "Acertou a palavra!!!\n";
 						cout << "1-Tentar acertar a palavra\n2-Save do jogo\n0-Sair\n";
@@ -86,8 +88,6 @@ void Jogo::loop() {
 		}
 	}
 	if (this->getTabuleiro()->getPalavras().empty()) {
-		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 3);
-		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
@@ -96,7 +96,9 @@ void Jogo::loop() {
 		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 7);
 		cout << "                                                                ";
-		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 3);
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
+		cout << "                                                                ";
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 		cout << "Voce conseguiu acertar todas as palavras!!!! Parabéns!!!!\n";
 		system("PAUSE");
 	}
@@ -110,13 +112,15 @@ Jogador* Jogo::getJogador() {
 	return this->jogador;
 }
 
-void Jogo::init() {
+bool Jogo::init() {
+	bool err = false;
 	this->jogador = new Jogador();
 	this->tabuleiro = new Tabuleiro();
 	Letra::setTipo_M_m(Letra::generateM_m());
-	this->tabuleiro->loadPalavras();
-	this->tabuleiro->GenerarMatriz();
+	if(!(err = this->tabuleiro->loadPalavras()))
+		this->tabuleiro->GenerarMatriz();
 	system("CLS");
+	return err;
 }
 
 void Jogo::SaveGame() {

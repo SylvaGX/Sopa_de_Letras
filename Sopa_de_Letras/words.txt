@@ -1,3 +1,4 @@
+#Destritos de Portugal
 Porto
 Lisboa
 Coimbra
@@ -16,3 +17,56 @@ Viseu
 Castelo Branco
 Beja
 Santarém
+/#
+#Estados dos Estados Unidos
+Alabama
+Alasca
+Arcansas
+Arizona
+Califórnia
+Cansas
+Carolina do Norte
+Carolina do Sul
+Colorado
+Coneticute
+Dakota do Norte
+Dakota do Sul
+Delaware
+Flórida
+Geórgia
+Havai
+Idaho
+Ilha de Rodes
+Ilinóis
+Indiana
+Iowa
+Kentucky
+Luisiana
+Maine
+Marilândia
+Massachusetts
+Míchigan
+Minesota
+Mississípi
+Missúri
+Montana
+Nebrasca
+Nevada
+Nova Hampshire
+Nova Jérsei
+Nova Iorque
+Novo México
+Oclaoma
+Ohio
+Óregon
+Pensilvânia
+Tenessi
+Texas
+Utá
+Vermonte
+Virgínia
+Virgínia Ocidental
+Washington
+Wisconsin
+Wyoming
+/#

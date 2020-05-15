@@ -9,7 +9,7 @@ class Jogo {
 	public:
 		Jogo();
 		~Jogo();
-		void init(); //função que inicializa o jog
+		bool init(); //função que inicializa o jog
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
 		void loop();//loop do jogo

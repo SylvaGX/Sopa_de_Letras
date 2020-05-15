@@ -23,6 +23,7 @@ class Tabuleiro {
 		int nPalavras;
 		vector<Palavra> palavras;
 		vector<Palavra> guessWords;
+		string categoria;
 		bool GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y);
 	public:
 		Tabuleiro();
@@ -36,6 +37,7 @@ class Tabuleiro {
 		void setPalavras(vector<Palavra> palavras);
 		size_t getDimX() { return DimX; };
 		size_t getDimY() { return DimY; };
+		string getCategoria() {return categoria;};
 		vector<vector<Letra>> getMatrizLetras();
 		vector<Palavra> getPalavras();
 		void showPalavras();

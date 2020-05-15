@@ -17,17 +17,22 @@ using namespace std;
 
 int main() {
 	Ponto::UpdateColWin();
-	int w = Ponto::getWinW();//Colunsa da janela
+	int w = Ponto::getWinW();//Colunas da janela
 	int h = Ponto::getWinW();//Linhas da janela
 	locale::global(locale(""));
 	Jogo *jogo;
 	char c;
+	bool err = false;
 	int l = 1;
 	while (l) {
 		cout << "Está no jogo de LeTraS\n";
 		cout << "----------------------\n";
 		cout << "----------------------\n";
 		cout << "----------------------\n";
+		if (err) {
+			cout << "Houve um erro ao carregar as palavras. Verifique se o formato do ficheiro se encontra correto.\n";
+			err = false;
+		}
 		cout << "1 - Novo Jogo\n2 - Carregar Jogo\n0 - Sair\n-> ";
 		cin >> c;
 		cin.ignore();
@@ -52,8 +57,8 @@ int main() {
 				cout << "    ";
 				Ponto::gotoxy(0, 0);
 				jogo = new Jogo();
-				jogo->init();//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
-				jogo->loop();//Loop do jogo
+				if(!(err = jogo->init()))//Inicializar o Jogo com os dados da pessoa, tabuleiro, palavras, etc...
+					jogo->loop();//Loop do jogo
 				delete jogo;//Apagar o jogo
 				system("CLS");
 				break;
