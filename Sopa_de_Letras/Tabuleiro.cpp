@@ -76,7 +76,7 @@ void Tabuleiro::setDimY(size_t DimY) {
 	this->DimY = DimY;
 }
 
-void Tabuleiro::set_nPalavras(int nPalavras) {
+void Tabuleiro::setNpalavras(int nPalavras) {
 	this->nPalavras = nPalavras;
 }
 
@@ -185,7 +185,7 @@ void Tabuleiro::GenerarMatriz() {
 
 	for (size_t i = 0; i < this->DimY; i++) {
 		for (size_t j = 0; j < this->DimX; j++) {
-				this->matrizLetras[i][j] = Letra(' ', Ponto(i, j), 32, 0, 0);
+				this->matrizLetras[i][j] = Letra(' ', Ponto((int)i, (int)j), 32, 0, 0);
 		}
 	}
 
@@ -255,10 +255,10 @@ void Tabuleiro::CountSpaceMatriz(vector<int>& X, vector<int>& Y) {
 
 bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y) {
 	bool inseriu = false;
-	size_t strlen = p->size();
+	int strlen = (int)p->size();
 	size_t j = 0;
 	if (x == -1 && y != -1) {// ver na Horizontal
-		int maxlen = DimX - (strlen - 1);
+		int maxlen = (int)DimX - (strlen - 1);
 		bool H = true;
 		bool HR = true;
 		//palavra direita
@@ -292,7 +292,7 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 		}
 	}
 	else if(y == -1 && x != -1){//ver na Vertical
-		int maxlen = DimY - (strlen - 1);
+		int maxlen = (int)DimY - (strlen - 1);
 		bool V = true;
 		bool VR = true;
 		//palavra direita
@@ -329,10 +329,10 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 		int numDiagY = 0;
 		int numDiagX = 0;
 		if (DimX < DimY) {
-			numDiagY = (size_t)(DimY - DimX);
+			numDiagY = (int)(DimY - DimX);
 		}
 		else if(DimY < DimX){
-			numDiagX = (size_t)(DimX - DimY);
+			numDiagX = (int)(DimX - DimY);
 		}
 		size_t l = 0;
 		int maxlen = 0;
@@ -343,10 +343,10 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 		bool DSR = true;
 		while (DimY + numDiagY > 4 && DimY + numDiagY >= strlen) {
 			if (numDiagY >= 0) {
-				maxlen = min(DimY, DimX) - (strlen - 1);
+				maxlen = (int)min(DimY, DimX) - (strlen - 1);
 			}
 			else {
-				maxlen = min(DimY, DimX) + numDiagY - (strlen - 1);
+				maxlen = (int)min(DimY, DimX) + numDiagY - (strlen - 1);
 			}
 			while (DimX + numDiagX > 4 && DimX + numDiagX >= strlen) {
 				if (numDiagX >= 0) {
@@ -360,13 +360,13 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 						if (p->getPalavra()[j] != this->matrizLetras[l + k + j][i + k + j].getLetra() && this->matrizLetras[l + k + j][i + k + j].getLetra() != ' ') {
 							DP = false;
 						}
-						if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[l + k + j][i + k + j].getLetra() && this->matrizLetras[l + k + j][i + k + j].getLetra() != ' ') {
+						if (p->getPalavra()[(strlen - 1) - j] != this->matrizLetras[l + k + j][i + k + j].getLetra() && this->matrizLetras[l + k + j][i + k + j].getLetra() != ' ') {
 							DPR = false;
 						}
 						if (p->getPalavra()[j] != this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() && this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() != ' ') {
 							DS = false;
 						}
-						if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() && this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() != ' ') {
+						if (p->getPalavra()[(strlen - 1) - j] != this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() && this->matrizLetras[l + k + j][DimX - 1 - i - k - j].getLetra() != ' ') {
 							DSR = false;
 						}
 					}
@@ -415,7 +415,7 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 				numDiagX = 0;
 			}
 			else if (DimY < DimX) {
-				numDiagX = DimX - DimY;
+				numDiagX = (int)(DimX - DimY);
 			}
 		}
 	}
@@ -522,7 +522,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setEstado(0);
 				p->setOrientacao(4);
 				p->setPonto(Ponto(x, y));
-				for (size_t i = 0; i < l; i++) {
+				for (int i = 0; i < l; i++) {
 					laux = Letra((*p).getPalavra()[i], Ponto(x + i, y + i), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y + i][x + i] = laux;
 				}
@@ -532,8 +532,8 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				Letra laux = Letra();
 				p->setEstado(0);
 				p->setOrientacao(5);
-				p->setPonto(Ponto((x + p->getPalavra().size() - 1), (y + p->getPalavra().size() - 1)));
-				for (size_t i = 0; i < l; i++) {
+				p->setPonto(Ponto((x + (int)p->getPalavra().size() - 1), (y + (int)p->getPalavra().size() - 1)));
+				for (int i = 0; i < l; i++) {
 					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x + i, y + i), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y + i][x + i] = laux;
 				}
@@ -544,7 +544,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setEstado(0);
 				p->setOrientacao(6);
 				p->setPonto(Ponto(x, y));
-				for (size_t i = 0; i < l; i++) {
+				for (int i = 0; i < l; i++) {
 					laux = Letra((*p).getPalavra()[i], Ponto(x - i, y + i), (int)(*p).getPalavra()[i], 0, 0);
 					this->matrizLetras[y + i][x - i] = laux;
 				}
@@ -555,7 +555,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 				p->setEstado(0);
 				p->setOrientacao(7);
 				p->setPonto(Ponto((x - (p->getPalavra().size() - 1)), (y + p->getPalavra().size() - 1)));
-				for (size_t i = 0; i < l; i++) {
+				for (int i = 0; i < l; i++) {
 					laux = Letra((*p).getPalavra()[l - i - 1], Ponto(x - i, y + i), (int)(*p).getPalavra()[l - i - 1], 0, 0);
 					this->matrizLetras[y + i][x - i] = laux;
 				}
@@ -809,24 +809,25 @@ void Tabuleiro::SelectPalavras(){
 			CountSpaceMatriz(X, Y);
 		}
 	}
-	quicksort(auxPal, 0, auxPal.size()-1);
+	quicksort(auxPal, 0, (int)auxPal.size()-1);
 	this->setPalavras(auxPal);
+	setNpalavras((int)auxPal.size());
 }
 
 //Por em pesquisa binária -- Important --
-int Tabuleiro::VerificarPalavra(string str, Jogador &jog) {
+int Tabuleiro::VerificarPalavra(string str, Jogador& jog) {
 	int sms = 0;
 	if (!str.empty()) {
 		pair<size_t, size_t> i; // X, Y
 		int mid = 0;
 		int low = 0;
-		int high =  this->palavras.size() - 1;
+		int high = (int)this->palavras.size() - 1;
 		size_t strlen = 0;
 		size_t x = 0, y = 0;
 		while (low <= high) {
 
 			mid = low + (high - low) / 2;
-			
+
 			if (this->palavras[mid].getPalavra() == str) {
 				i = Ponto::AskPonto(DimY);
 				if (i.first - 1 >= 0 && i.second - 1 >= 0) {
@@ -1049,8 +1050,38 @@ int Tabuleiro::VerificarPalavra(string str, Jogador &jog) {
 	return sms;
 }
 
+/*
+
+****
+****
+****
+****
+****
+****
+
+*/
+
 void Tabuleiro::Save(ofstream& os) {
+	os << getDimX() << "\n" << getDimY() << "\n";
+	for (size_t i = 0; i < getDimY(); i++) {
+		for (size_t j = 0; j < getDimX(); j++) {
+			getMatrizLetras()[i][j].Save(os);
+			os << "\n";
+		}
+	}
+	os << Letra::getTipo_M_m() << endl;
+	os << getPalavras().size() << endl;
+	for (size_t i = 0; i < getPalavras().size(); i++) {
+		getPalavras()[i].Save(os);
+		os << "\n";
+	}
+	os << getGuessWords().size() << endl;
+	for (size_t i = 0; i < getGuessWords().size(); i++) {
+		getGuessWords()[i].Save(os);
+		os << "\n";
+	}
+	os << getCategoria();
 }
 
-void Tabuleiro::Read(ifstream& is) {
+void Tabuleiro::Load(ifstream& is) {
 }

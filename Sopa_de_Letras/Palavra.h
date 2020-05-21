@@ -33,5 +33,6 @@ class Palavra {
 		bool operator== (string str2);
 		bool operator<(Palavra str);
 		bool operator>(Palavra str);
+		void Save(ofstream& os);
 };
 

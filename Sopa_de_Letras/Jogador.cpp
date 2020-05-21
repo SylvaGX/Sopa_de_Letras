@@ -53,6 +53,13 @@ void Jogador::operator++(int p) {
 	this->pontos++;
 }
 
+void Jogador::Save(ofstream& os) {
+	os << this->GetNome() << "\n" << this->GetIdade() << "\n" << this->GetPontos() << "\n";
+}
+
+void Jogador::Load(ifstream& is) {
+}
+
 ostream& operator<<(ostream& os, const Jogador *jog) {
 	os << jog->GetNome() << endl << jog->GetIdade();
 	return os;

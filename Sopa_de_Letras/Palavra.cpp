@@ -180,3 +180,8 @@ bool Palavra::operator<(Palavra str) {
 bool Palavra::operator>(Palavra str) {
 	return (this->getPalavra() > str.getPalavra());
 }
+
+void Palavra::Save(ofstream& os) {
+	os << getPalavra() << ";" << getOrientacao() << ";" << getEstado();
+	getPonto().Save(os);
+}

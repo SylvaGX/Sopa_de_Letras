@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -24,5 +25,7 @@ class Jogador {
 		bool JogarPalavra();
 		void operator++ (int);
 		friend ostream& operator<<(ostream& os, const Jogador *jog);
+		void Save(ofstream& os);
+		void Load(ifstream& is);
 };
 

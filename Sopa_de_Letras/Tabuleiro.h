@@ -32,7 +32,7 @@ class Tabuleiro {
 		void Draw();
 		void setDimX(size_t DimX);
 		void setDimY(size_t DimY);
-		void set_nPalavras(int nPalavras);
+		void setNpalavras(int nPalavras);
 		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
 		void setPalavras(vector<Palavra> palavras);
 		size_t getDimX() { return DimX; };
@@ -40,6 +40,7 @@ class Tabuleiro {
 		string getCategoria() {return categoria;};
 		vector<vector<Letra>> getMatrizLetras();
 		vector<Palavra> getPalavras();
+		vector<Palavra> getGuessWords() { return this->guessWords; };
 		void showPalavras();
 		bool loadPalavras();
 		void GenerarMatriz();
@@ -49,6 +50,6 @@ class Tabuleiro {
 		void SelectPalavras();
 		int VerificarPalavra(string str, Jogador &jog);
 		void Save(ofstream& os);
-		void Read(ifstream& is);
+		void Load(ifstream& is);
 };
 

@@ -83,6 +83,7 @@ void Ponto::operator=(Ponto p) {
 }
 
 void Ponto::Save(ofstream& os) {
+	os << Get_x() << ";" << Get_y();
 }
 
 void Ponto::Read(ifstream& is) {

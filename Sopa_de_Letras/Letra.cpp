@@ -60,3 +60,8 @@ bool Letra::operator!=(char letra) {
 bool Letra::operator!=(Letra letra) {
 	return (getLetra() != letra.getLetra()) ? true : false;
 }
+
+void Letra::Save(ofstream& os) {
+	os << getLetra() << ";" << getAscii() << ";" << getBold() << ";" << getCor();
+	getPonto().Save(os);
+}

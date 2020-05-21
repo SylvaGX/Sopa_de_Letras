@@ -31,5 +31,6 @@ class Letra {
 		static int verificaTipo(char c);
 		bool operator!=(char letra);
 		bool operator!=(Letra letra);
+		void Save(ofstream& os);
 };
 

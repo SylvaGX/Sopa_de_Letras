@@ -17,7 +17,7 @@ class Jogo {
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
 		void loop();//loop do jogo
-		void SaveGame();
-		void LoadGame();
+		int Save();
+		void Load();
 };
 
