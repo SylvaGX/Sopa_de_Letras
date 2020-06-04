@@ -1,7 +1,5 @@
 #include "Jogo.h"
 
-using namespace std;
-
 Jogo::Jogo(){
 	this->jogador = NULL;
 	this->tabuleiro = NULL;
@@ -69,7 +67,7 @@ void Jogo::loop() {
 						cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 						cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
 						cout << "Acertou a palavra!!!\n";
-						cout << "1-Tentar acertar a palavra\n2-Save do jogo\n0-Sair\n";
+						cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n";
 						cout << "->";
 						break;
 					}
@@ -198,13 +196,36 @@ Jogador* Jogo::getJogador() {
 	return this->jogador;
 }
 
+void Jogo::setNameFile(string namefile) {
+	this->namefile = namefile;
+}
+
+Jogador* Jogo::perdirDificuldade() {
+	Jogador* j = nullptr;
+	string s;
+	do {
+		cout << "Escolha a dificuldade do jogo\n1 - Pricipiante\n2 - Experiente\n->";
+		getline(cin, s);
+		system("CLS");
+	} while (!is_numeric(s) || (s != "1" && s != "2"));
+	if (s == "1") {
+		j = new Principiante();
+	}
+	else if (s == "2") {
+		j = new Experiente();
+	}
+	return j;
+}
+
 bool Jogo::init() {
 	bool err = false;
-	this->jogador = new Jogador();
+	this->jogador = perdirDificuldade();
+	this->jogador->newJogador();
 	this->tabuleiro = new Tabuleiro();
+	this->tabuleiro->newTabuleiro();
 	Letra::setTipo_M_m(Letra::generateM_m());
 	if(!(err = this->tabuleiro->loadPalavras()))
-		this->tabuleiro->GenerarMatriz();
+		this->tabuleiro->GenerarMatriz(this->jogador);
 	system("CLS");
 	return err;
 }
@@ -239,7 +260,7 @@ int Jogo::Save() {
 			aux += "0" + to_string(ltm->tm_mon) + "_";
 		}
 		else aux += to_string(ltm->tm_mon) + "_";
-		aux += to_string(ltm->tm_year) + ".sopa";
+		aux += to_string(ltm->tm_year + 1900) + ".sopa";
 	}
 	else aux = namefile;
 	ofs.open(aux);
@@ -252,5 +273,27 @@ int Jogo::Save() {
 	return sms;
 }
 
-void Jogo::Load() {
+bool Jogo::Load(ifstream &is) {
+	bool sms = 1;
+	string s = "";
+	getline(is, s);
+	if (is_numeric(s)) {
+		if (s == "1") {
+			this->jogador = new Principiante();
+		}
+		else if (s == "2") {
+			this->jogador = new Experiente();
+		}
+		if (this->jogador->Load(is)) {
+			this->tabuleiro = new Tabuleiro();
+			if (this->tabuleiro->Load(is));
+			else
+				sms = 0;
+		}
+		else
+			sms = 0;
+	}
+	else
+		sms = 0;
+	return sms;
 }

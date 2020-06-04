@@ -1,10 +1,5 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <ostream>
-#include <windows.h>
-
-using namespace std;
+#include "Main.h"
 
 class Ponto{
 	private:
@@ -34,6 +29,6 @@ class Ponto{
 		void operator = (Ponto ponto);
 		friend ostream& operator<< (ostream& os, const Ponto ponto);
 		void Save(ofstream& os);
-		void Read(ifstream& is);
+		bool Load(ifstream& is);
 };
 
