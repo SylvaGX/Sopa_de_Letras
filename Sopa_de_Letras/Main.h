@@ -12,6 +12,7 @@
 #include <ctime>
 #include <time.h>
 #include <locale>
+#include <cmath>
 #include <filesystem>
 
 using namespace std;

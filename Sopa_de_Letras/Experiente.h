@@ -4,13 +4,16 @@
 
 class Experiente : public Jogador {
 public:
-	float time;
-	static tm* auxTime;
+	long long int time;
+	tm* auxTime;
 public:
 	Experiente();
 	~Experiente();
-	float GetTime() { return time; };
-	void SetTime(float time) { this->time = time; };
+	long long int GetTime() { return time; };
+	void SetTime(long long int time) { this->time = time; };
+	void setAuxTime(tm* auxTime);
+	tm* getAuxTime() { return auxTime; };
+	void diferencaHora(tm* atualTime);
 	float adquirirPontos();
 	void Save(ofstream& os);
 	bool Load(ifstream& is);

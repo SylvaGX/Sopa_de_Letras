@@ -21,6 +21,13 @@ void Jogo::loop() {
 	cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 	cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
 	cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n";
+	if (dynamic_cast<Experiente*>(this->jogador)) {
+		Experiente* ex;
+		ex = dynamic_cast<Experiente*>(this->jogador);
+		time_t now = time(0);
+		ex->setAuxTime(localtime(&now));
+		ex = nullptr;
+	}
 	while (l && !this->getTabuleiro()->getPalavras().empty()) {
 		cin >> j;
 		switch (j) {
@@ -77,6 +84,12 @@ void Jogo::loop() {
 				break;
 			}
 			case 2:{
+				if (dynamic_cast<Experiente*>(this->jogador)) {
+					Experiente* ex;
+					ex = dynamic_cast<Experiente*>(this->jogador);
+					time_t now = time(0);
+					ex->diferencaHora(localtime(&now));
+				}
 				sms = Save();
 				Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 				switch (sms) {
@@ -100,9 +113,22 @@ void Jogo::loop() {
 				Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 				cout << "->";
 				sms = 0;
+				if (dynamic_cast<Experiente*>(this->jogador)) {
+					Experiente* ex;
+					ex = dynamic_cast<Experiente*>(this->jogador);
+					time_t now = time(0);
+					ex->setAuxTime(localtime(&now));
+					ex = nullptr;
+				}
 				break;
 			}
 			case 0:{
+				if (dynamic_cast<Experiente*>(this->jogador)) {
+					Experiente* ex;
+					ex = dynamic_cast<Experiente*>(this->jogador);
+					time_t now = time(0);
+					ex->diferencaHora(localtime(&now));
+				}
 				Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 				cout << "                                                                ";
 				Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
@@ -131,6 +157,13 @@ void Jogo::loop() {
 						cout << "2 - Save do jogo                                                  \n";
 						cout << "0 - Sair                                                          \n";
 						cout << "-> ";
+						if (dynamic_cast<Experiente*>(this->jogador)) {
+							Experiente* ex;
+							ex = dynamic_cast<Experiente*>(this->jogador);
+							time_t now = time(0);
+							ex->setAuxTime(localtime(&now));
+							ex = nullptr;
+						}
 						break;
 					}
 					case 1:{
@@ -172,6 +205,12 @@ void Jogo::loop() {
 		}
 	}
 	if (this->getTabuleiro()->getPalavras().empty()) {
+		if (dynamic_cast<Experiente*>(this->jogador)) {
+			Experiente* ex;
+			ex = dynamic_cast<Experiente*>(this->jogador);
+			time_t now = time(0);
+			ex->diferencaHora(localtime(&now));
+		}
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
@@ -183,7 +222,7 @@ void Jogo::loop() {
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
-		cout << "Voce conseguiu acertar todas as palavras!!!! Parabéns!!!!\n";
+		cout << "Voce conseguiu acertar todas as palavras!!!!\nOs seu pontos são " << this->jogador->adquirirPontos() << "!!! Parabéns!!!!\n";
 		system("PAUSE");
 	}
 }
@@ -234,6 +273,7 @@ int Jogo::Save() {
 	ofstream ofs;
 	string aux = "";
 	int sms = 0;
+	bool CN = false;
 
 	if (namefile == "") {
 		time_t now = time(0);
@@ -261,6 +301,8 @@ int Jogo::Save() {
 		}
 		else aux += to_string(ltm->tm_mon) + "_";
 		aux += to_string(ltm->tm_year + 1900) + ".sopa";
+		namefile = aux;
+		CN = true;
 	}
 	else aux = namefile;
 	ofs.open(aux);
@@ -269,6 +311,9 @@ int Jogo::Save() {
 		getTabuleiro()->Save(ofs);
 		ofs.close();
 		sms = 1;
+	}
+	else if(CN){
+		namefile = "";
 	}
 	return sms;
 }

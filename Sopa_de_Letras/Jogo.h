@@ -11,7 +11,7 @@ class Jogo {
 	public:
 		Jogo();
 		~Jogo();
-		bool init(); //função que inicializa o jog
+		bool init(); //função que inicializa o jogador
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
 		string getNameFile() { return namefile; };
