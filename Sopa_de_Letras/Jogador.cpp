@@ -47,10 +47,13 @@ string Jogador::PedirNome() {
 }
 
 int Jogador::PedirIdade() {
-	int Nidade;
-	cout << "Insira a sua idade\n-> ";
-	cin >> Nidade;
-	return Nidade;
+	string Nidade;
+	do {
+		system("CLS");
+		cout << "Insira a sua idade\n-> ";
+		getline(cin, Nidade);
+	} while (!is_numeric(Nidade));
+	return stoi(Nidade);
 }
 
 bool Jogador::JogarPalavra() {

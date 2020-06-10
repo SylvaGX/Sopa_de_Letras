@@ -50,14 +50,33 @@ void Ponto::gotoxy(short x, short y) {
 
 pair<int, int> Ponto::AskPonto(size_t DimY) {
 	pair<size_t, size_t> i;
-	size_t x, y;
+	string x;
+	string y;
 	gotoxy(0, (short)DimY + 4);
 	cout << "Digite a posição da palavra:                                    \n";
 	cout << "Digite a posição x\n->";
-	cin >> x;
+	getline(cin, x);
+	while (!is_numeric(x)) {
+		gotoxy(0, (short)DimY + 6);
+		for (size_t i = 0; i < x.length(); i++) {
+			cout << " ";
+		}
+		gotoxy(0, (short)DimY + 5);
+		cout << "Digite a posição x\n->";
+		getline(cin, x);
+	}
 	cout << "Digite a posição y\n->";
-	cin >> y;
-	i = make_pair(x, y);
+	getline(cin, y);
+	while (!is_numeric(y)) {
+		gotoxy(2, (short)DimY + 8);
+		for (size_t i = 0; i < y.length(); i++) {
+			cout << " ";
+		}
+		gotoxy(0, (short)DimY + 7);
+		cout << "Digite a posição x\n->";
+		getline(cin, y);
+	}
+	i = make_pair(stoul(x), stoul(y));
 	return i;
 }
 

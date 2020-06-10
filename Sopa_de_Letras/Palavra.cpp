@@ -55,7 +55,7 @@ string Palavra::pedirpalavra(size_t DimX, size_t DimY) {
 	Ponto::gotoxy(0, (short)DimY + 5);
 	cout << "->";
 	string pedir;
-	cin >> pedir;
+	getline(cin, pedir);
 	if (Letra::getTipo_M_m() == 0) {
 		transform(pedir.begin(), pedir.end(), pedir.begin(), ::toupper);
 	}

@@ -18,8 +18,34 @@ Tabuleiro::~Tabuleiro() {
 }
 
 void Tabuleiro::newTabuleiro() {
-	cout << "Digite as dimenções da matriz\n-> ";
-	cin >> this->DimY >> this->DimX;
+	string p = "";
+	system("CLS");
+	cout << "Digite as dimenções da matriz:\n";
+	cout << "Digite as linhas\n-> ";
+	getline(cin, p);
+	while (!is_numeric(p)) {
+		Ponto::gotoxy(2, 2);
+		for (size_t i = 0; i < p.length(); i++) {
+			cout << " ";
+		}
+		Ponto::gotoxy(0, 1);
+		cout << "Digite as linhas\n-> ";
+		getline(cin, p);
+	}
+	this->DimY = stoul(p);
+	p = "";
+	cout << "Digite as colunas\n-> ";
+	getline(cin, p);
+	while (!is_numeric(p)) {
+		Ponto::gotoxy(2, 4);
+		for (size_t i = 0; i < p.length(); i++) {
+			cout << " ";
+		}
+		Ponto::gotoxy(0, 3);
+		cout << "Digite as colunas\n-> ";
+		getline(cin, p);
+	}
+	this->DimX = stoul(p);
 	//ler o ficheiro das palavras
 	this->nPalavras = -1;
 }
@@ -925,7 +951,7 @@ void Tabuleiro::SelectPalavras(Jogador* j){
 
 int Tabuleiro::VerificarPalavra(string str, Jogador& jog) {
 	int sms = 0;
-	if (!str.empty()) {
+	if (!str.empty() && !is_numeric(str)) {
 		pair<size_t, size_t> i; // X, Y
 		int mid = 0;
 		int low = 0;
