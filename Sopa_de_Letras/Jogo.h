@@ -11,12 +11,12 @@ class Jogo {
 	public:
 		Jogo();
 		~Jogo();
-		bool init(); //função que inicializa o jogador
+		int init(); //função que inicializa o jogador
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
 		string getNameFile() { return namefile; };
 		void setNameFile(string namefile);
-		Jogador* perdirDificuldade();
+		Jogador* perdirDificuldade(int &err);
 		void loop();//loop do jogo
 		int Save();
 		bool Load(ifstream& is);

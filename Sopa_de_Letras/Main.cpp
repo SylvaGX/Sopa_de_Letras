@@ -7,7 +7,7 @@ int main() {
 	Jogo *jogo;
 	ifstream is;
 	string k = "";
-	bool err = false;
+	int err = 0;
 	int sms = -1;
 	int l = 1;
 	int smsf = -1;
@@ -19,9 +19,9 @@ int main() {
 		cout << "----------------------\n";
 		cout << "----------------------\n";
 		cout << "----------------------\n";
-		if (err) {
+		if (err == 1) {
 			cout << "Houve um erro ao carregar as palavras. Verifique se o formato do ficheiro se encontra correto.\n";
-			err = false;
+			err = 0;
 		}
 		if (sms == 0) {
 			cout << "Insira um número!!!!                                                                           \n";

@@ -330,32 +330,44 @@ void Jogo::setNameFile(string namefile) {
 	this->namefile = namefile;
 }
 
-Jogador* Jogo::perdirDificuldade() {
+Jogador* Jogo::perdirDificuldade(int &err) {
 	Jogador* j = nullptr;
 	string s;
 	do {
-		cout << "Escolha a dificuldade do jogo\n1 - Pricipiante\n2 - Experiente\n->";
+		cout << "Escolha a dificuldade do jogo\n1 - Pricipiante\n2 - Experiente\n0 - Voltar\n->";
 		getline(cin, s);
 		system("CLS");
-	} while (!is_numeric(s) || (s != "1" && s != "2"));
+	} while (!is_numeric(s) || (s != "1" && s != "2" && s != "0"));
 	if (s == "1") {
 		j = new Principiante();
 	}
 	else if (s == "2") {
 		j = new Experiente();
 	}
+	else if(s == "0") {
+		err = 2;
+	}
 	return j;
 }
 
-bool Jogo::init() {
-	bool err = false;
-	this->jogador = perdirDificuldade();
-	this->jogador->newJogador();
-	this->tabuleiro = new Tabuleiro();
-	this->tabuleiro->newTabuleiro();
-	Letra::setTipo_M_m(Letra::generateM_m());
-	if(!(err = this->tabuleiro->loadPalavras()))
-		this->tabuleiro->GenerarMatriz(this->jogador);
+int Jogo::init() {
+	int err = 0;
+	this->jogador = perdirDificuldade(err);
+	if (err == 0) {
+		if (this->jogador != nullptr) {
+			this->jogador->newJogador();
+			this->tabuleiro = new Tabuleiro();
+			if (this->tabuleiro != nullptr) {
+				this->tabuleiro->newTabuleiro();
+				Letra::setTipo_M_m(Letra::generateM_m());
+				if (!(err = this->tabuleiro->loadPalavras()))
+					this->tabuleiro->GenerarMatriz(this->jogador);
+			}
+			else
+				err = 1;
+		}
+		else err = 1;
+	}
 	system("CLS");
 	return err;
 }
