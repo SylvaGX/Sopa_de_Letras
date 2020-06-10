@@ -43,8 +43,8 @@ bool compareStringFile(string str1, string str2) {
 		}
 	}
 	if (p == -1) {
-		substr1 = str1.substr(pos1 - 1);
-		substr2 = str2.substr(pos2 - 1);
+		substr1 = str1.substr(0, pos1);
+		substr2 = str2.substr(0, pos2);
 		substr1.erase(std::remove(substr1.begin(), substr1.end(), '-'), substr1.end());
 		substr2.erase(std::remove(substr2.begin(), substr2.end(), '-'), substr2.end());
 		for (i = 0; i < substr1.length(); i++) {
@@ -56,7 +56,19 @@ bool compareStringFile(string str1, string str2) {
 				p = 0;
 				break;
 			}
+			else if (substr1[i] == substr2[i] && i % 2 == 0) {
+				continue;
+			}
+			else if (substr1[i] > substr2[i] && i % 2 != 0) {
+				p = 1;
+				break;
+			}
+			else if(substr1[i] < substr2[i] && i % 2 != 0){
+				p = 0;
+				break;
+			}
 		}
+		if (p == -1) p = 0;
 	}
 	return p;
 }
