@@ -2,6 +2,65 @@
 #include "Main.h"
 #include "Jogo.h"
 
+bool compareStringFile(string str1, string str2) {
+	size_t pos1 = str1.find(" ");
+	size_t pos2 = str2.find(" ");
+	string substr1 = str1.substr(pos1 + 1);
+	string substr2 = str2.substr(pos2 + 1);
+	substr1.erase(std::remove(substr1.begin(), substr1.end(), '_'), substr1.end());
+	substr2.erase(std::remove(substr2.begin(), substr2.end(), '_'), substr2.end());
+	int p = -1;
+	size_t i = 0;
+	for (i = 0; i < substr1.length(); i++) {
+		if (i < 4) {
+			if (substr1[i] > substr2[i] && i % 2 == 0) {
+				p = 1;
+				i++;
+			}
+			else if (substr1[i] < substr2[i] && i % 2 == 0) {
+				p = 0;
+				i++;
+			}
+			else if (substr1[i] == substr2[i] && i % 2 == 0) {
+				continue;
+			}
+			else if(substr1[i] > substr2[i] && i % 2 != 0){
+				p = 1;
+			}
+			else if (substr1[i] < substr2[i] && i % 2 != 0) {
+				p = 0;
+			}
+		}
+		else {
+			if (substr1[i] > substr2[i]) {
+				p = 1;
+				break;
+			}
+			else if(substr1[i] < substr2[i]) {
+				p = 0;
+				break;
+			}
+		}
+	}
+	if (p == -1) {
+		substr1 = str1.substr(pos1 - 1);
+		substr2 = str2.substr(pos2 - 1);
+		substr1.erase(std::remove(substr1.begin(), substr1.end(), '-'), substr1.end());
+		substr2.erase(std::remove(substr2.begin(), substr2.end(), '-'), substr2.end());
+		for (i = 0; i < substr1.length(); i++) {
+			if (substr1[i] > substr2[i] && i % 2 == 0) {
+				p = 1;
+				break;
+			}
+			else if (substr1[i] < substr2[i] && i % 2 == 0) {
+				p = 0;
+				break;
+			}
+		}
+	}
+	return p;
+}
+
 int main() {
 	locale::global(locale(""));
 	Jogo *jogo;
@@ -75,6 +134,7 @@ int main() {
 							files.push_back(file.stem().string());
 						}
 					}
+					sort(files.begin(), files.end(), compareStringFile);
 					if (!files.empty()) {
 						string c = "";
 						bool r = 1;
