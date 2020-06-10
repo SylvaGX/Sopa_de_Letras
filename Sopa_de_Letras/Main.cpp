@@ -10,6 +10,7 @@ int main() {
 	bool err = false;
 	int sms = -1;
 	int l = 1;
+	int smsf = -1;
 	string file_path = __FILE__;
 	string dir_path = file_path.substr(0, file_path.rfind("\\"));
 	while (l) {
@@ -86,7 +87,16 @@ int main() {
 								cout << j << " - " << *i << endl;
 							}
 							j--;
-							cout << "0 - Voltar\n->";
+							cout << "0 - Voltar\n";
+							if (smsf == 0) {
+								cout << "Insira um número!!!!                                                                           \n";
+								smsf = -1;
+							}
+							else if (smsf == 1) {
+								cout << "Insira um número válido!!!!                                                                    \n";
+								smsf = -1;
+							}
+							cout << "-> ";
 							getline(cin, c);
 							if (is_numeric(c)) {
 								if (stoi(c) >= 1 && stoi(c) <= j) {
@@ -109,9 +119,12 @@ int main() {
 								else if (stoi(c) == 0) {
 									r = 0;
 								}
+								else {
+									smsf = 1;
+								}
 							}
 							else {
-								r = 0;
+								smsf = 0;
 							}
 						}
 						system("CLS");
