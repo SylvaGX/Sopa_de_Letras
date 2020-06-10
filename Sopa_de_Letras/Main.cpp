@@ -102,6 +102,10 @@ int main() {
 			cout << "Insira um número válido!!!!                                                                    \n";
 			sms = -1;
 		}
+		else if(sms == 2){
+			cout << "Não existe jogos guardados!!!!                                                                 \n";
+			sms = -1;
+		}
 		cout << "1 - Novo Jogo\n2 - Carregar Jogo\n0 - Sair\n-> ";
 		getline(cin, k);
 		if (is_numeric(k)) {
@@ -203,6 +207,7 @@ int main() {
 					}
 					else {
 						system("CLS");
+						sms = 2;
 					}
 					break;
 				}
