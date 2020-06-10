@@ -10,21 +10,23 @@ Experiente::~Experiente() {
 
 void Experiente::setAuxTime(tm* auxTime) {
 	if (auxTime != nullptr) {
-		this->auxTime = new tm;
-	}
-	else {
 		delete (this->auxTime);
 		this->auxTime = new tm;
 	}
-	this->auxTime->tm_year = auxTime->tm_year;
-	this->auxTime->tm_mon = auxTime->tm_mon;
-	this->auxTime->tm_wday = auxTime->tm_wday;
-	this->auxTime->tm_mday = auxTime->tm_mday;
-	this->auxTime->tm_yday = auxTime->tm_yday;
-	this->auxTime->tm_hour = auxTime->tm_hour;
-	this->auxTime->tm_min = auxTime->tm_min;
-	this->auxTime->tm_sec = auxTime->tm_sec;
-	this->auxTime->tm_isdst = auxTime->tm_isdst;
+	else {
+		this->auxTime = new tm;
+	}
+	if (auxTime != NULL) {
+		this->auxTime->tm_year = auxTime->tm_year;
+		this->auxTime->tm_mon = auxTime->tm_mon;
+		this->auxTime->tm_wday = auxTime->tm_wday;
+		this->auxTime->tm_mday = auxTime->tm_mday;
+		this->auxTime->tm_yday = auxTime->tm_yday;
+		this->auxTime->tm_hour = auxTime->tm_hour;
+		this->auxTime->tm_min = auxTime->tm_min;
+		this->auxTime->tm_sec = auxTime->tm_sec;
+		this->auxTime->tm_isdst = auxTime->tm_isdst;
+	}
 }
 
 void Experiente::diferencaHora(tm* atualTime) {
