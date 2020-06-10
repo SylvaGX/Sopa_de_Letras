@@ -3,14 +3,12 @@
 #include <fstream>
 #include <ostream>
 #include <windows.h>
-#include <time.h>
+#include <ctime>
 #include <string>
 #include <algorithm>
 #include <numeric>
 #include <random>
 #include <chrono>
-#include <ctime>
-#include <time.h>
 #include <locale>
 #include <cmath>
 #include <filesystem>

@@ -23,7 +23,7 @@ class Jogador {
 		bool JogarPalavra();
 		void operator++ (int);
 		friend ostream& operator<<(ostream& os, const Jogador *jog);
-		virtual float adquirirPontos() =0;
+		virtual int adquirirPontos() =0;
 		virtual void Save(ofstream& os) =0;
 		virtual bool Load(ifstream& is) =0;
 };

@@ -14,7 +14,7 @@ public:
 	void setAuxTime(tm* auxTime);
 	tm* getAuxTime() { return auxTime; };
 	void diferencaHora(tm* atualTime);
-	float adquirirPontos();
+	int adquirirPontos();
 	void Save(ofstream& os);
 	bool Load(ifstream& is);
 };

@@ -6,7 +6,7 @@ class Principiante : public Jogador {
 public:
 	Principiante();
 	~Principiante();
-	float adquirirPontos();
+	int adquirirPontos();
 	void Save(ofstream& os);
 	bool Load(ifstream& is);
 };

@@ -39,9 +39,6 @@ void Palavra::setPalavra(string str) {
 }
 
 string Palavra::pedirpalavra(size_t DimX, size_t DimY) {
-	Ponto::UpdateColWin();
-	int w = Ponto::getWinW();
-	int h = Ponto::getWinH();
 	Ponto::gotoxy(0, (short)DimY + 4);
 	cout << "Qual é a palavra que queres advinhar?                           ";
 	Ponto::gotoxy(0, (short)DimY + 5);

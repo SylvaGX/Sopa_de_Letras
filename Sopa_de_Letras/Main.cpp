@@ -3,9 +3,6 @@
 #include "Jogo.h"
 
 int main() {
-	Ponto::UpdateColWin();
-	int w = Ponto::getWinW();//Colunas da janela
-	int h = Ponto::getWinW();//Linhas da janela
 	locale::global(locale(""));
 	Jogo *jogo;
 	ifstream is;

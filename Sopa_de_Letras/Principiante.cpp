@@ -6,7 +6,7 @@ Principiante::Principiante() : Jogador() {
 Principiante::~Principiante() {
 }
 
-float Principiante::adquirirPontos() {
+int Principiante::adquirirPontos() {
 	return GetPontos();
 }
 
