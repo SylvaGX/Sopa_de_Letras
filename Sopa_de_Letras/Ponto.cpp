@@ -57,7 +57,7 @@ pair<int, int> Ponto::AskPonto(size_t DimY) {
 	cout << "Digite a posição x\n->";
 	getline(cin, x);
 	while (!is_numeric(x)) {
-		gotoxy(0, (short)DimY + 6);
+		gotoxy(2, (short)DimY + 6);
 		for (size_t i = 0; i < x.length(); i++) {
 			cout << " ";
 		}
@@ -73,7 +73,7 @@ pair<int, int> Ponto::AskPonto(size_t DimY) {
 			cout << " ";
 		}
 		gotoxy(0, (short)DimY + 7);
-		cout << "Digite a posição x\n->";
+		cout << "Digite a posição y\n->";
 		getline(cin, y);
 	}
 	i = make_pair(stoul(x), stoul(y));

@@ -24,7 +24,7 @@ void Tabuleiro::newTabuleiro() {
 	cout << "Digite as linhas\n-> ";
 	getline(cin, p);
 	while (!is_numeric(p)) {
-		Ponto::gotoxy(2, 2);
+		Ponto::gotoxy(3, 2);
 		for (size_t i = 0; i < p.length(); i++) {
 			cout << " ";
 		}
@@ -37,7 +37,7 @@ void Tabuleiro::newTabuleiro() {
 	cout << "Digite as colunas\n-> ";
 	getline(cin, p);
 	while (!is_numeric(p)) {
-		Ponto::gotoxy(2, 4);
+		Ponto::gotoxy(3, 4);
 		for (size_t i = 0; i < p.length(); i++) {
 			cout << " ";
 		}
