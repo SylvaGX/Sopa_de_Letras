@@ -297,9 +297,9 @@ int Jogo::Save() {
 		}
 		else aux += to_string(ltm->tm_mday) + "_";
 		if (ltm->tm_mon < 10) {
-			aux += "0" + to_string(ltm->tm_mon) + "_";
+			aux += "0" + to_string(ltm->tm_mon + 1) + "_";
 		}
-		else aux += to_string(ltm->tm_mon) + "_";
+		else aux += to_string(ltm->tm_mon + 1) + "_";
 		aux += to_string(ltm->tm_year + 1900) + ".sopa";
 		namefile = aux;
 		CN = true;
