@@ -86,7 +86,22 @@ void Ponto::Save(ofstream& os) {
 	os << Get_x() << ";" << Get_y();
 }
 
-void Ponto::Read(ifstream& is) {
+bool Ponto::Load(ifstream& is) {
+	bool sms = 1;
+	string p = "";
+	getline(is, p, ';');
+	if (is_numeric(p)) {
+		Set_x(stoi(p));
+		getline(is, p);
+		if (is_numeric(p)) {
+			Set_y(stoi(p));
+		}
+		else
+			sms = 0;
+	}
+	else
+		sms = 0;
+	return sms;
 }
 
 ostream& operator<<(ostream& os, const Ponto ponto) {

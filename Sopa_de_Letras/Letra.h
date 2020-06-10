@@ -1,5 +1,5 @@
 #pragma once
-#include <time.h>
+#include "Main.h"
 #include "Ponto.h"
 
 class Letra {
@@ -32,5 +32,6 @@ class Letra {
 		bool operator!=(char letra);
 		bool operator!=(Letra letra);
 		void Save(ofstream& os);
+		bool Load(ifstream& is);
 };
 

@@ -1,7 +1,5 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <ctime>
+#include "Main.h"
 #include "Tabuleiro.h"
 #include "Jogador.h"
 
@@ -16,8 +14,11 @@ class Jogo {
 		bool init(); //função que inicializa o jogador
 		Tabuleiro* getTabuleiro();
 		Jogador* getJogador();
+		string getNameFile() { return namefile; };
+		void setNameFile(string namefile);
+		Jogador* perdirDificuldade();
 		void loop();//loop do jogo
 		int Save();
-		void Load();
+		bool Load(ifstream& is);
 };
 
