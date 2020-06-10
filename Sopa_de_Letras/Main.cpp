@@ -203,10 +203,8 @@ int main() {
 								smsf = 0;
 							}
 						}
-						system("CLS");
 					}
 					else {
-						system("CLS");
 						sms = 2;
 					}
 					break;
