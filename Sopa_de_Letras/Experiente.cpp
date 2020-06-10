@@ -48,7 +48,7 @@ void Experiente::diferencaHora(tm* atualTime) {
 float Experiente::adquirirPontos() {
 	float p = (float)GetPontos();
 	float max = p * 2 * 60;
-	return (time <= max) ? p : round(((max)/time)*p);
+	return (time <= max) ? p : floor(((max)/time)*p);
 }
 
 void Experiente::Save(ofstream& os) {// mudar para por o nivel de dificuldade
