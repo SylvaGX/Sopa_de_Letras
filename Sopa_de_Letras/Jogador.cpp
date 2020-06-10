@@ -1,10 +1,11 @@
 #include "Jogador.h"
 
+using namespace std;
 
 Jogador::Jogador() {
-	nome = "";
-	idade = 0;
-	pontos = 0;
+	string Nnome = PedirNome();
+	int Nidade = PedirIdade();
+	setJogador(Nnome, Nidade);
 }
 
 Jogador::Jogador(string nome, int idade, int pontos) {
@@ -13,12 +14,6 @@ Jogador::Jogador(string nome, int idade, int pontos) {
 }
 
 Jogador::~Jogador() {
-}
-
-void Jogador::newJogador() {
-	string Nnome = PedirNome();
-	int Nidade = PedirIdade();
-	setJogador(Nnome, Nidade);
 }
 
 void Jogador::setJogador(string nome, int idade) {
@@ -33,10 +28,6 @@ void Jogador::setNome(string nome) {
 
 void Jogador::setIdade(int idade) {
 	this->idade = idade;
-}
-
-void Jogador::setPontos(int pontos) {
-	this->pontos = pontos;
 }
 
 string Jogador::PedirNome() {
@@ -60,6 +51,13 @@ bool Jogador::JogarPalavra() {
 
 void Jogador::operator++(int p) {
 	this->pontos++;
+}
+
+void Jogador::Save(ofstream& os) {
+	os << this->GetNome() << "\n" << this->GetIdade() << "\n" << this->GetPontos() << "\n";
+}
+
+void Jogador::Load(ifstream& is) {
 }
 
 ostream& operator<<(ostream& os, const Jogador *jog) {

@@ -1,9 +1,15 @@
 #include "Tabuleiro.h"
 
+using namespace std;
+
+bool is_digit(const char value) { return isdigit(value); }
+bool is_numeric(const string& value) { return all_of(value.begin(), value.end(), is_digit); }
+
 Tabuleiro::Tabuleiro() {
-	DimX = 0;
-	DimY = 0;
-	nPalavras = 0;
+	cout << "Digite as dimenções da matriz\n-> ";
+	cin >> this->DimY >> this->DimX;
+	//ler o ficheiro das palavras
+	this->nPalavras = -1;
 }
 
 Tabuleiro::Tabuleiro(vector<vector<Letra>> matrizLetras, size_t DimX, size_t DimY, int nPalavras, vector<Palavra> palavras) {
@@ -15,13 +21,6 @@ Tabuleiro::Tabuleiro(vector<vector<Letra>> matrizLetras, size_t DimX, size_t Dim
 }
 
 Tabuleiro::~Tabuleiro() {
-}
-
-void Tabuleiro::newTabuleiro() {
-	cout << "Digite as dimenções da matriz\n-> ";
-	cin >> this->DimY >> this->DimX;
-	//ler o ficheiro das palavras
-	this->nPalavras = -1;
 }
 
 void Tabuleiro::Draw() {
@@ -87,10 +86,6 @@ void Tabuleiro::setMatrizLetras(vector<vector<Letra>> matrizLetras) {
 
 void Tabuleiro::setPalavras(vector<Palavra> palavras) {
 	this->palavras = palavras;
-}
-
-void Tabuleiro::setCategoria(string categoria) {
-	this->categoria = categoria;
 }
 
 vector<vector<Letra>> Tabuleiro::getMatrizLetras() {
@@ -176,7 +171,7 @@ bool Tabuleiro::loadPalavras() {
 	return err;
 }
 
-void Tabuleiro::GenerarMatriz(Jogador* j) {
+void Tabuleiro::GenerarMatriz() {
 	this->matrizLetras = vector<vector<Letra> >(DimY, vector<Letra>(DimX));
 	int r = 0;
 	int M_m = 0;
@@ -190,11 +185,11 @@ void Tabuleiro::GenerarMatriz(Jogador* j) {
 
 	for (size_t i = 0; i < this->DimY; i++) {
 		for (size_t j = 0; j < this->DimX; j++) {
-				this->matrizLetras[i][j] = Letra(' ', Ponto((int)j, (int)i), 32, 0, 0);
+				this->matrizLetras[i][j] = Letra(' ', Ponto((int)i, (int)j), 32, 0, 0);
 		}
 	}
 
-	SelectPalavras(j);
+	SelectPalavras();
 	
 	char aux;
 	for (size_t i = 0; i < this->DimY; i++) {
@@ -204,7 +199,6 @@ void Tabuleiro::GenerarMatriz(Jogador* j) {
 				aux = (char) r;
 				this->matrizLetras[i][j].setLetra(aux);
 				this->matrizLetras[i][j].setAscii(r);
-				this->matrizLetras[i][j].setPonto(Ponto(j, i));
 			}
 		}
 	}
@@ -259,119 +253,76 @@ void Tabuleiro::CountSpaceMatriz(vector<int>& X, vector<int>& Y) {
 	}
 }
 
-bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y, Jogador* n) {
+bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y) {
 	bool inseriu = false;
 	int strlen = (int)p->size();
 	size_t j = 0;
 	if (x == -1 && y != -1) {// ver na Horizontal
 		int maxlen = (int)DimX - (strlen - 1);
-		if(dynamic_cast<Principiante*>(n)){
-			bool H = true;
-			for (int i = 0; i < maxlen; i++) {
-				for (j = 0; j < strlen && H ; j++) {
-					if (p->getPalavra()[j] != this->matrizLetras[y][i + j].getLetra() && this->matrizLetras[y][i + j].getLetra() != ' ') {
-						H = false;
-					}
+		bool H = true;
+		bool HR = true;
+		//palavra direita
+		for (int i = 0; i < maxlen; i++) {
+			for (j = 0; j < strlen && (H || HR); j++) {
+				if (p->getPalavra()[j] != this->matrizLetras[y][i + j].getLetra() && this->matrizLetras[y][i + j].getLetra() != ' ') {
+					H = false;
 				}
-				if (j == strlen) {
-					if (H) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(0, make_pair(y, i)));
-						if (!inseriu)
-							inseriu = true;
-					}
-					
+				if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[y][i + j].getLetra() && this->matrizLetras[y][i + j].getLetra() != ' ') {
+					HR = false;
 				}
-				H = true;
 			}
-		}
-		else {
-			bool H = true;
-			bool HR = true;
-			for (int i = 0; i < maxlen; i++) {
-				for (j = 0; j < strlen && (H || HR); j++) {
-					if (p->getPalavra()[j] != this->matrizLetras[y][i + j].getLetra() && this->matrizLetras[y][i + j].getLetra() != ' ') {
-						H = false;
-					}
-					if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[y][i + j].getLetra() && this->matrizLetras[y][i + j].getLetra() != ' ') {
-						HR = false;
-					}
+			if (j == strlen) {
+				if (H) {
+					//inserir a palavra nas opcoes
+					//push_back(make_pair(direção,make_pair(y, x)))
+					opcoes.push_back(make_pair(0, make_pair(y, i)));
+					if (!inseriu)
+						inseriu = true;
 				}
-				if (j == strlen) {
-					if (H) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(0, make_pair(y, i)));
-						if (!inseriu)
-							inseriu = true;
-					}
-					if (HR) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(1, make_pair(y, i)));
-						if (!inseriu)
-							inseriu = true;
-					}
+				if (HR) {
+					//inserir a palavra nas opcoes
+					//push_back(make_pair(direção,make_pair(y, x)))
+					opcoes.push_back(make_pair(1, make_pair(y, i)));
+					if (!inseriu)
+						inseriu = true;
 				}
-				H = true;
-				HR = true;
 			}
+			H = true;
+			HR = true;
 		}
 	}
 	else if(y == -1 && x != -1){//ver na Vertical
 		int maxlen = (int)DimY - (strlen - 1);
-		if (dynamic_cast<Principiante*>(n)) {
-			bool V = true;
-			for (int i = 0; i < maxlen; i++) {
-				for (j = 0; j < strlen && V; j++) {
-					if (p->getPalavra()[j] != this->matrizLetras[i + j][x].getLetra() && this->matrizLetras[i + j][x].getLetra() != ' ') {
-						V = false;
-					}
+		bool V = true;
+		bool VR = true;
+		//palavra direita
+		for (int i = 0; i < maxlen; i++) {
+			for (j = 0; j < strlen && (V || VR); j++) {
+				if (p->getPalavra()[j] != this->matrizLetras[i + j][x].getLetra() && this->matrizLetras[i + j][x].getLetra() != ' ') {
+					V = false;
 				}
-				if (j == strlen) {
-					if (V) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(2, make_pair(i, x)));
-						if (!inseriu)
-							inseriu = true;
-					}
+				if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[i + j][x].getLetra() && this->matrizLetras[i + j][x].getLetra() != ' ') {
+					VR = false;
 				}
-				V = true;
 			}
-		}
-		else {
-			bool V = true;
-			bool VR = true;
-			for (int i = 0; i < maxlen; i++) {
-				for (j = 0; j < strlen && (V || VR); j++) {
-					if (p->getPalavra()[j] != this->matrizLetras[i + j][x].getLetra() && this->matrizLetras[i + j][x].getLetra() != ' ') {
-						V = false;
-					}
-					if (p->getPalavra()[strlen - 1 - j] != this->matrizLetras[i + j][x].getLetra() && this->matrizLetras[i + j][x].getLetra() != ' ') {
-						VR = false;
-					}
+			if (j == strlen) {
+				if (V) {
+					//inserir a palavra nas opcoes
+					//push_back(make_pair(direção,make_pair(y, x)))
+					opcoes.push_back(make_pair(2, make_pair(i, x)));
+					if (!inseriu)
+						inseriu = true;
 				}
-				if (j == strlen) {
-					if (V) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(2, make_pair(i, x)));
-						if (!inseriu)
-							inseriu = true;
-					}
-					if (VR) {
-						//inserir a palavra nas opcoes
-						//push_back(make_pair(direção,make_pair(y, x)))
-						opcoes.push_back(make_pair(3, make_pair(i, x)));
-						if (!inseriu)
-							inseriu = true;
-					}
+				if (VR) {
+					//inserir a palavra nas opcoes
+					//push_back(make_pair(direção,make_pair(y, x)))
+					opcoes.push_back(make_pair(3, make_pair(i, x)));
+					if (!inseriu)
+						inseriu = true;
 				}
-				V = true;
-				VR = true;
 			}
+			V = true;
+			VR = true;
 		}
 	}
 	else {
@@ -471,7 +422,7 @@ bool Tabuleiro::GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, p
 	return inseriu;
 }
 
-bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y, Jogador* j) {
+bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y) {
 	//0 - esquerda_direita, 1 - direita_esquerda, 2 - cima_baixo, 3 - baixo_cima.
 	//serve para saber a posição dos pontos.
 	//segundo pair<y, x>
@@ -481,14 +432,14 @@ bool Tabuleiro::PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y,
 	bool ok = false;
 	if (!Y.empty()) {
 		for (vector<int>::iterator i = Y.begin(); i != Y.end(); i++) {
-			if (GetPossibilities(p, opcoes, -1, (*i), j)) {
+			if (GetPossibilities(p, opcoes, -1, (*i))) {
 				ok = true;
 			}
 		}
 	}
 	else if(!X.empty()){
 		for (vector<int>::iterator i = X.begin(); i != X.end(); i++) {
-			if (GetPossibilities(p, opcoes, (*i), -1, j)) {
+			if (GetPossibilities(p, opcoes, (*i), -1)) {
 				ok = true;
 			}
 		}
@@ -556,7 +507,7 @@ bool Tabuleiro::PutDiag(vector<Palavra>::iterator p) {
 	int x = 0;
 	int y = 0;
 	bool ok = false;
-	if (GetPossibilities(p, opcoes, -1, -1, nullptr)) {
+	if (GetPossibilities(p, opcoes, -1, -1)) {
 		ok = true;
 	}
 	if (ok) {
@@ -645,235 +596,71 @@ void quicksort(vector<Palavra>& p, int left, int right) {
 	}
 }
 
-void Tabuleiro::SelectPalavras(Jogador* j){
+void Tabuleiro::SelectPalavras(){
 	srand((unsigned)time(nullptr));
 	int dir = 0;
 	vector<Palavra> auxPal;
-	vector<int> X(DimX);//palavras possiveis na posição respetiva(Horizontal)
-	vector<int> Y(DimY);//palavras possiveis na posição respetiva(Vertical)
+	vector<int> X(DimX);//palavras possiveis na posição respetiva(Vertical)
+	vector<int> Y(DimY);//palavras possiveis na posição respetiva(Horizontal)
 	iota(X.begin(), X.end(), 0);
 	iota(Y.begin(), Y.end(), 0);
-	j->adquirirPontos();
-	if (dynamic_cast<Principiante*>(j)) {
-		for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
-			if (i->size() <= max(DimX, DimY)) {
-				if (i->size() <= DimY && i->size() <= DimX) {
-					if (!X.empty() && !Y.empty()) {//Ou Vertical ou Horizontal
-						dir = rand() % 2;
-						if (dir == 0) {//Horizontal
-							if (PutM(i, X, vector<int>(0), j)) {
-								auxPal.push_back((*i));
-							}
-							else {//Vertical
-								if (PutM(i, vector<int>(0), Y,j)) {
+	for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
+		if (i->size() <= max(DimX, DimY)) {
+			if (i->size() <= DimY && i->size() <= DimX) {
+				if (!X.empty() && !Y.empty()) {//Ou Vertical ou Horizontal ou Diagonal
+					dir = rand() % 3;
+					if (dir == 0) {//Vertical
+						if (PutM(i, X, vector<int>(0))) {
+							auxPal.push_back((*i));
+						}
+						else {//Ou Horizontal ou Diagonal
+							dir = rand() % 2;
+							if (dir == 0) {//Horizontal
+								if (PutM(i, vector<int>(0), Y)) {
 									auxPal.push_back((*i));
 								}
-							}
-						}
-						else if (dir == 1) {//Vertical
-							if (PutM(i, vector<int>(0), Y, j)) {
-								auxPal.push_back((*i));
-							}
-							else {//Horizontal
-								if (PutM(i, X, vector<int>(0), j)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-					}
-					else if (!X.empty()) {//Horizontal
-						if (PutM(i, X, vector<int>(0), j)) {
-							auxPal.push_back((*i));
-						}
-					}
-					else if (!Y.empty()) {//Vertical
-						if (PutM(i, vector<int>(0), Y, j)) {
-							auxPal.push_back((*i));
-						}
-					}
-				}
-				else if (i->size() <= DimY) {
-					if (!Y.empty()) {//Vertical
-						if (PutM(i, vector<int>(0), Y, j)) {
-							auxPal.push_back((*i));
-						}
-
-					}
-					else if (i->size() <= DimX) {
-						if (!X.empty()) {//Horizontal
-							if (PutM(i, X, vector<int>(0), j)) {
-								auxPal.push_back((*i));
-							}
-						}
-					}
-					CountSpaceMatriz(X, Y);
-				}
-			}
-		}
-	}
-	else {
-		for (vector<Palavra>::iterator i = this->palavras.begin(); i != this->palavras.end(); i++) {
-			if (i->size() <= max(DimX, DimY)) {
-				if (i->size() <= DimY && i->size() <= DimX) {
-					if (!X.empty() && !Y.empty()) {//Ou Vertical ou Horizontal ou Diagonal
-						dir = rand() % 3;
-						if (dir == 0) {//Horizontal
-							if (PutM(i, X, vector<int>(0), j)) {
-								auxPal.push_back((*i));
-							}
-							else {//Ou Vertical ou Diagonal
-								dir = rand() % 2;
-								if (dir == 0) {//Vertical
-									if (PutM(i, vector<int>(0), Y, j)) {
-										auxPal.push_back((*i));
-									}
-									else {
-										if (PutDiag(i)) {
-											auxPal.push_back((*i));
-										}
-									}
-								}
-								else {//Diagonal
+								else {
 									if (PutDiag(i)) {
 										auxPal.push_back((*i));
 									}
-									else {//Vertical
-										if (PutM(i, vector<int>(0), Y, j)) {
-											auxPal.push_back((*i));
-										}
+								}
+							}
+							else {//Diagonal
+								if (PutDiag(i)) {
+									auxPal.push_back((*i));
+								}
+								else {
+									if (PutM(i, vector<int>(0), Y)) {
+										auxPal.push_back((*i));
 									}
 								}
 							}
 						}
-						else if (dir == 1) {//Horizontal
-							if (PutM(i, vector<int>(0), Y, j)) {
-								auxPal.push_back((*i));
-							}
-							else {//Ou Vertical ou Diagonal
-								dir = rand() % 2;
-								if (dir == 0) {//Vertical
-									if (PutM(i, X, vector<int>(0), j)) {
-										auxPal.push_back((*i));
-									}
-									else {
-										if (PutDiag(i)) {
-											auxPal.push_back((*i));
-										}
-									}
+					}
+					else if (dir == 1) {//Horizontal
+						if (PutM(i, vector<int>(0), Y)) {
+							auxPal.push_back((*i));
+						}
+						else {//Ou Vertical ou Diagonal
+							dir = rand() % 2;
+							if (dir == 0) {//Vertical
+								if (PutM(i, X, vector<int>(0))) {
+									auxPal.push_back((*i));
 								}
-								else {//Diagonal
+								else {
 									if (PutDiag(i)) {
 										auxPal.push_back((*i));
 									}
-									else {
-										if (PutM(i, X, vector<int>(0), j)) {
-											auxPal.push_back((*i));
-										}
-									}
 								}
 							}
-						}
-						else {//Diagonal
-							if (PutDiag(i)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								dir = rand() % 2;
-								if (dir == 0) {//Vertical
-									if (PutM(i, X, vector<int>(0), j)) {
+							else {//Diagonal
+								if (PutDiag(i)) {
+									auxPal.push_back((*i));
+								}
+								else {
+									if (PutM(i, X, vector<int>(0))) {
 										auxPal.push_back((*i));
 									}
-									else {
-										if (PutM(i, vector<int>(0), Y, j)) {
-											auxPal.push_back((*i));
-										}
-									}
-								}
-								else {//Horizontal
-									if (PutM(i, vector<int>(0), Y, j)) {
-										auxPal.push_back((*i));
-									}
-									else {
-										if (PutM(i, X, vector<int>(0), j)) {
-											auxPal.push_back((*i));
-										}
-									}
-								}
-							}
-						}
-					}
-					else if (!X.empty()) {//Ou Vertical ou Diagonal
-						dir = rand() % 2;
-						if (dir == 0) {//Vertical
-							if (PutM(i, X, vector<int>(0), j)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutDiag(i)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-						else {//Diagonal
-							if (PutDiag(i)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutM(i, X, vector<int>(0), j)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-					}
-					else if (!Y.empty()) {//Ou Horizontal ou Diagonal
-						dir = rand() % 2;
-						if (dir == 0) {//Horizontal
-							if (PutM(i, vector<int>(0), Y, j)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutDiag(i)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-						else {//Diagonal
-							if (PutDiag(i)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutM(i, vector<int>(0), Y, j)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-					}
-					else {
-						if (PutDiag(i)) {
-							auxPal.push_back((*i));
-						}
-					}
-				}
-				else if (i->size() <= DimY) {
-					if (!Y.empty()) {//Ou Horizontal ou Diagonal
-						dir = rand() % 2;
-						if (dir == 0) {//Horizontal
-							if (PutM(i, vector<int>(0), Y, j)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutDiag(i)) {
-									auxPal.push_back((*i));
-								}
-							}
-						}
-						else {//Diagonal
-							if (PutDiag(i)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutM(i, vector<int>(0), Y, j)) {
-									auxPal.push_back((*i));
 								}
 							}
 						}
@@ -881,30 +668,94 @@ void Tabuleiro::SelectPalavras(Jogador* j){
 					else {//Diagonal
 						if (PutDiag(i)) {
 							auxPal.push_back((*i));
+						}
+						else {
+							dir = rand() % 2;
+							if (dir == 0) {//Vertical
+								if (PutM(i, X, vector<int>(0))) {
+									auxPal.push_back((*i));
+								}
+								else {
+									if (PutM(i, vector<int>(0), Y)) {
+										auxPal.push_back((*i));
+									}
+								}
+							}
+							else {//Horizontal
+								if (PutM(i, vector<int>(0), Y)) {
+									auxPal.push_back((*i));
+								}
+								else {
+									if (PutM(i, X, vector<int>(0))) {
+										auxPal.push_back((*i));
+									}
+								}
+							}
+						}
+					}
+				}
+				else if(!X.empty()){//Ou Vertical ou Diagonal
+					dir = rand() % 2;
+					if (dir == 0) {//Vertical
+						if (PutM(i, X, vector<int>(0))) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutDiag(i)) {
+								auxPal.push_back((*i));
+							}
+						}
+					}
+					else {//Diagonal
+						if (PutDiag(i)) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutM(i, X, vector<int>(0))) {
+								auxPal.push_back((*i));
+							}
+						}
+					}
+				}
+				else if(!Y.empty()){//Ou Horizontal ou Diagonal
+					dir = rand() % 2;
+					if (dir == 0) {//Horizontal
+						if (PutM(i, vector<int>(0), Y)) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutDiag(i)) {
+								auxPal.push_back((*i));
+							}
+						}
+					}
+					else {//Diagonal
+						if (PutDiag(i)) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutM(i, vector<int>(0), Y)) {
+								auxPal.push_back((*i));
+							}
 						}
 					}
 				}
 				else {
-					if (!X.empty()) {//Ou Vertical ou Diagonal
-						dir = rand() % 2;
-						if (dir == 0) {//Vertical
-							if (PutM(i, X, vector<int>(0), j)) {
-								auxPal.push_back((*i));
-							}
-							else {
-								if (PutDiag(i)) {
-									auxPal.push_back((*i));
-								}
-							}
+					if (PutDiag(i)) {
+						auxPal.push_back((*i));
+					}
+				}
+			}
+			else if(i->size() <= DimY){
+				if (!Y.empty()) {//Ou Horizontal ou Diagonal
+					dir = rand() % 2;
+					if (dir == 0) {//Horizontal
+						if (PutM(i, vector<int>(0), Y)) {
+							auxPal.push_back((*i));
 						}
-						else {//Diagonal
+						else {
 							if (PutDiag(i)) {
 								auxPal.push_back((*i));
-							}
-							else {
-								if (PutM(i, X, vector<int>(0), j)) {
-									auxPal.push_back((*i));
-								}
 							}
 						}
 					}
@@ -912,10 +763,50 @@ void Tabuleiro::SelectPalavras(Jogador* j){
 						if (PutDiag(i)) {
 							auxPal.push_back((*i));
 						}
+						else {
+							if (PutM(i, vector<int>(0), Y)) {
+								auxPal.push_back((*i));
+							}
+						}
 					}
 				}
-				CountSpaceMatriz(X, Y);
+				else {//Diagonal
+					if (PutDiag(i)) {
+						auxPal.push_back((*i));
+					}
+				}
 			}
+			else {
+				if (!X.empty()) {//Ou Vertical ou Diagonal
+					dir = rand() % 2;
+					if (dir == 0) {//Vertical
+						if (PutM(i, X, vector<int>(0))) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutDiag(i)) {
+								auxPal.push_back((*i));
+							}
+						}
+					}
+					else {//Diagonal
+						if (PutDiag(i)) {
+							auxPal.push_back((*i));
+						}
+						else {
+							if (PutM(i, X, vector<int>(0))) {
+								auxPal.push_back((*i));
+							}
+						}
+					}
+				}
+				else {//Diagonal
+					if (PutDiag(i)) {
+						auxPal.push_back((*i));
+					}
+				}
+			}
+			CountSpaceMatriz(X, Y);
 		}
 	}
 	quicksort(auxPal, 0, (int)auxPal.size()-1);
@@ -923,6 +814,7 @@ void Tabuleiro::SelectPalavras(Jogador* j){
 	setNpalavras((int)auxPal.size());
 }
 
+//Por em pesquisa binária -- Important --
 int Tabuleiro::VerificarPalavra(string str, Jogador& jog) {
 	int sms = 0;
 	if (!str.empty()) {
@@ -1158,6 +1050,17 @@ int Tabuleiro::VerificarPalavra(string str, Jogador& jog) {
 	return sms;
 }
 
+/*
+
+****
+****
+****
+****
+****
+****
+
+*/
+
 void Tabuleiro::Save(ofstream& os) {
 	os << getDimX() << "\n" << getDimY() << "\n";
 	for (size_t i = 0; i < getDimY(); i++) {
@@ -1180,71 +1083,5 @@ void Tabuleiro::Save(ofstream& os) {
 	os << getCategoria();
 }
 
-bool Tabuleiro::Load(ifstream& is) {
-	bool sms = 1;
-	int n = 0;
-	string t = "";
-	getline(is, t);
-	if (is_numeric(t)) {
-		setDimX(stoi(t));
-		getline(is, t);
-		if (is_numeric(t)) {
-			setDimY(stoi(t));
-			n = getDimX() * getDimY();
-			this->matrizLetras = vector<vector<Letra> >(DimY, vector<Letra>(DimX));
-			Letra *Laux;
-			for (size_t i = 0; i < n && sms; i++) {
-				Laux = new Letra;
-				if (Laux->Load(is)) {
-					this->matrizLetras[Laux->getPonto().Get_y()][Laux->getPonto().Get_x()] = (*Laux);
-				}
-				else
-					sms = 0;
-				delete Laux;
-			}
-			getline(is, t);
-			Letra::setTipo_M_m(stoi(t));
-			getline(is, t);
-			if (is_numeric(t) && sms) {
-				n = stoi(t);
-				Palavra *Paux;
-				for (size_t i = 0; i < n && sms; i++) {
-					Paux = new Palavra;
-					if (Paux->Load(is)) {
-						this->palavras.push_back(*Paux);
-					}
-					else
-						sms = 0;
-					delete Paux;
-				}
-				getline(is, t);
-				if (is_numeric(t) && sms ) {
-					n = stoi(t);
-					Palavra* Paux;
-					for (size_t i = 0; i < n && sms; i++) {
-						Paux = new Palavra;
-						if (Paux->Load(is)) {
-							this->guessWords.push_back(*Paux);
-						}
-						else
-							sms = 0;
-						delete Paux;
-					}
-					if (sms) {
-						getline(is, t);
-						setCategoria(t);
-					}
-				}
-				else
-					sms = 0;
-			}
-			else
-				sms = 0;
-		}
-		else
-			sms = 0;
-	}
-	else
-		sms = 0;
-	return sms;
+void Tabuleiro::Load(ifstream& is) {
 }

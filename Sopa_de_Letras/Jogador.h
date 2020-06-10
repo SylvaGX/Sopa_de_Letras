@@ -1,5 +1,9 @@
 #pragma once
-#include "Main.h"
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
 
 class Jogador {
 	private:
@@ -10,11 +14,9 @@ class Jogador {
 		Jogador();
 		Jogador(string nome, int idade, int pontos);
 		virtual ~Jogador();
-		void newJogador();
 		void setJogador(string nome, int idade);
 		void setNome(string nome);
 		void setIdade(int idade);
-		void setPontos(int pontos);
 		string PedirNome(void);
 		int PedirIdade(void);
 		string GetNome(void) const { return nome; };
@@ -23,8 +25,7 @@ class Jogador {
 		bool JogarPalavra();
 		void operator++ (int);
 		friend ostream& operator<<(ostream& os, const Jogador *jog);
-		virtual float adquirirPontos() =0;
-		virtual void Save(ofstream& os) =0;
-		virtual bool Load(ifstream& is) =0;
+		void Save(ofstream& os);
+		void Load(ifstream& is);
 };
 

@@ -1,8 +1,12 @@
 #pragma once
-#include "Main.h"
+#include <iostream>
+#include <locale>
+#include <algorithm>
+#include <string>
+#include <vector>
 #include "Letra.h"
-#include "Principiante.h"
-#include "Experiente.h"
+
+using namespace std;
 
 class Palavra {
 	private:
@@ -30,6 +34,5 @@ class Palavra {
 		bool operator<(Palavra str);
 		bool operator>(Palavra str);
 		void Save(ofstream& os);
-		bool Load(ifstream& is);
 };
 

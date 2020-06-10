@@ -339,9 +339,5 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-#Zip Files
-*.zip
-*.7z
-
 #Save Files
 *.sopa

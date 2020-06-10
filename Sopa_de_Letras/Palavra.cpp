@@ -182,29 +182,6 @@ bool Palavra::operator>(Palavra str) {
 }
 
 void Palavra::Save(ofstream& os) {
-	os << getPalavra() << ";" << getOrientacao() << ";" << getEstado() << ";";
+	os << getPalavra() << ";" << getOrientacao() << ";" << getEstado();
 	getPonto().Save(os);
-}
-
-bool Palavra::Load(ifstream& is) {
-	bool sms = 1;
-	string p = "";
-	getline(is, p, ';');
-	setPalavra(p);
-	getline(is, p, ';');
-	if (is_numeric(p)) {
-		setOrientacao(stoi(p));
-		getline(is, p, ';');
-		if (is_numeric(p)) {
-			setEstado(stoi(p));
-			if (pIni.Load(is));
-			else
-				sms = 0;
-		}
-		else
-			sms = 0;
-	}
-	else
-		sms = 0;
-	return sms;
 }

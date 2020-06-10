@@ -62,35 +62,6 @@ bool Letra::operator!=(Letra letra) {
 }
 
 void Letra::Save(ofstream& os) {
-	os << getLetra() << ";" << getAscii() << ";" << getBold() << ";" << getCor() << ";";
+	os << getLetra() << ";" << getAscii() << ";" << getBold() << ";" << getCor();
 	getPonto().Save(os);
-}
-
-bool Letra::Load(ifstream& is) {
-	bool sms = 1;
-	string c = "";
-	getline(is, c, ';');
-	setLetra(c[0]);
-	getline(is, c, ';');
-	if (is_numeric(c)) {
-		setAscii(stoi(c));
-		getline(is, c, ';');
-		if (is_numeric(c)) {
-			setBold(stoi(c));
-			getline(is, c, ';');
-			if (is_numeric(c)) {
-				setCor(stoi(c));
-				if (ponto.Load(is));
-				else
-					sms = 0;
-			}
-			else
-				sms = 0;
-		}
-		else
-			sms = 0;
-	}
-	else
-		sms = 0;
-	return sms;
 }

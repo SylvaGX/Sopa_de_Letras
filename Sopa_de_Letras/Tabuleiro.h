@@ -1,8 +1,19 @@
 #pragma once
-#include "Main.h"
+#include <vector>
+#include <fstream>
+#include <iostream>
+#include <windows.h>
+#include <time.h>
+#include <string>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <chrono>
 #include "Jogador.h"
 #include "Letra.h"
 #include "Palavra.h"
+
+using namespace std;
 
 class Tabuleiro {
 	private:
@@ -13,19 +24,17 @@ class Tabuleiro {
 		vector<Palavra> palavras;
 		vector<Palavra> guessWords;
 		string categoria;
-		bool GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y, Jogador* j);
+		bool GetPossibilities(vector<Palavra>::iterator p, vector<pair<int, pair<int, int>>> &opcoes, int x, int y);
 	public:
 		Tabuleiro();
 		Tabuleiro(vector<vector<Letra>> matrizLetras, size_t DimX, size_t DimY, int nPalavras, vector<Palavra> palavras);
 		virtual ~Tabuleiro();
-		void newTabuleiro();
 		void Draw();
 		void setDimX(size_t DimX);
 		void setDimY(size_t DimY);
 		void setNpalavras(int nPalavras);
 		void setMatrizLetras(vector<vector<Letra>> matrizLetras);
 		void setPalavras(vector<Palavra> palavras);
-		void setCategoria(string categoria);
 		size_t getDimX() { return DimX; };
 		size_t getDimY() { return DimY; };
 		string getCategoria() {return categoria;};
@@ -34,13 +43,13 @@ class Tabuleiro {
 		vector<Palavra> getGuessWords() { return this->guessWords; };
 		void showPalavras();
 		bool loadPalavras();
-		void GenerarMatriz(Jogador* j);
+		void GenerarMatriz();
 		void CountSpaceMatriz(vector<int>& X, vector<int>& Y);
-		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y,Jogador* j);
+		bool PutM(vector<Palavra>::iterator &p, vector<int> X, vector<int> Y);
 		bool PutDiag(vector<Palavra>::iterator p);
-		void SelectPalavras(Jogador* j);
+		void SelectPalavras();
 		int VerificarPalavra(string str, Jogador &jog);
 		void Save(ofstream& os);
-		bool Load(ifstream& is);
+		void Load(ifstream& is);
 };
 
