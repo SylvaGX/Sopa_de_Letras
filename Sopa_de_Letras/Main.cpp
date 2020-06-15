@@ -73,6 +73,19 @@ bool compareStringFile(string str1, string str2) {
 	return p;
 }
 
+size_t isSaveFile(CHAR* c) {
+	string s = c;
+	size_t pos = s.find(".");
+	if (pos != string::npos) {
+		if ((s = s.substr(pos + 1)).size() != 4) {
+			if (s != "sopa") {
+				pos = -1;
+			}
+		}
+	}
+	return pos;
+}
+
 int main() {
 	locale::global(locale(""));
 	Jogo *jogo;
@@ -84,6 +97,7 @@ int main() {
 	int smsf = -1;
 	string file_path = __FILE__;
 	string dir_path = file_path.substr(0, file_path.rfind("\\"));
+	dir_path += "\\*";
 	while (l) {
 		system("CLS");
 		cout << "Está no jogo de LeTraS\n";
@@ -108,7 +122,7 @@ int main() {
 		}
 		cout << "1 - Novo Jogo\n2 - Carregar Jogo\n0 - Sair\n-> ";
 		getline(cin, k);
-		if (is_numeric(k)) {
+		if (is_numeric(k) && k != "") {
 			int j = stoi(k);
 			k = "";
 			switch (j) {
@@ -141,14 +155,19 @@ int main() {
 				}
 				case 2:
 				{
-					path pathToShow(dir_path);
-					path file;
+					WIN32_FIND_DATA data;
+					HANDLE hFind = FindFirstFile(dir_path.c_str(), &data);
 					vector<string> files;
-					for (const auto& entry : directory_iterator(pathToShow)) {
-						file = entry.path();
-						if (file.extension().string() == ".sopa") {
-							files.push_back(file.stem().string());
+					if (hFind != INVALID_HANDLE_VALUE) {
+						string fsave = "";
+						size_t pos = 0;
+						while (FindNextFile(hFind, &data)) {
+							if ((pos = isSaveFile(data.cFileName)) != string::npos) {
+								fsave = data.cFileName;
+								files.push_back(fsave.substr(0, pos));
+							}
 						}
+						FindClose(hFind);
 					}
 					sort(files.begin(), files.end(), compareStringFile);
 					if (!files.empty()) {
@@ -174,7 +193,7 @@ int main() {
 							}
 							cout << "-> ";
 							getline(cin, c);
-							if (is_numeric(c)) {
+							if (is_numeric(c) && c != "") {
 								if (stoi(c) >= 1 && stoi(c) <= j) {
 									string aux = "";
 									size_t pos = stoi(c);
@@ -184,11 +203,11 @@ int main() {
 										jogo = new Jogo;
 										jogo->setNameFile(aux + ".sopa");
 										if (jogo->Load(is)) {
+											is.close();
 											system("CLS");
 											jogo->loop();
 										}
 										delete jogo;
-										is.close();
 									}
 									r = 0;
 								}

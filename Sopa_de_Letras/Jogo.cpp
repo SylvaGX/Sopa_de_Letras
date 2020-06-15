@@ -20,7 +20,8 @@ void Jogo::loop() {
 	this->tabuleiro->Draw();
 	cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 	cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
-	cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n->\n";
+	cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n-> ";
+	
 	if (dynamic_cast<Experiente*>(this->jogador)) {
 		Experiente* ex;
 		ex = dynamic_cast<Experiente*>(this->jogador);
@@ -29,14 +30,15 @@ void Jogo::loop() {
 		ex = nullptr;
 	}
 	else if(dynamic_cast<Principiante*>(this->jogador)){
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 9);
 		for (size_t i = 0; i < (this->tabuleiro)->getPalavras().size(); i++) {
 			cout << this->tabuleiro->getPalavras()[i].getPalavra() << endl;
 		}
+		Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 7);
 	}
-	Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 7);
 	while (l && !this->getTabuleiro()->getPalavras().empty()) {
 		getline(cin, j);
-		if (is_numeric(j)) {
+		if (is_numeric(j) && j != "") {
 			int k = stoi(j);
 			j = "";
 			switch (k) {
@@ -139,7 +141,6 @@ void Jogo::loop() {
 					cout << "                                                                    ";
 					Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 					cout << "->\n";
-					sms = 0;
 					if (dynamic_cast<Experiente*>(this->jogador)) {
 						Experiente* ex;
 						ex = dynamic_cast<Experiente*>(this->jogador);
@@ -168,7 +169,7 @@ void Jogo::loop() {
 						system("CLS");
 						cout << "1 - Sair e Guardar\n2 - Sair sem gravar\n0 - Voltar\n-> ";
 						getline(cin, j);
-					} while (!is_numeric(j));
+					} while (!is_numeric(j) || j == "");
 					k = stoi(j);
 					switch (k) {
 						case 0:
@@ -178,7 +179,7 @@ void Jogo::loop() {
 							cout << "Categoria: " << this->getTabuleiro()->getCategoria() << endl;
 							cout << "Pontos: " << this->getJogador()->GetPontos() << endl;
 							cout << "1 - Tentar acertar a palavra\n2 - Save do jogo\n0 - Sair\n";
-							cout << "->\n";
+							cout << "-> ";
 							if (dynamic_cast<Experiente*>(this->jogador)) {
 								Experiente* ex;
 								ex = dynamic_cast<Experiente*>(this->jogador);
@@ -187,11 +188,13 @@ void Jogo::loop() {
 								ex = nullptr;
 							}
 							else if (dynamic_cast<Principiante*>(this->jogador)) {
+								cout << "\n\n";
 								for (size_t i = 0; i < (this->tabuleiro)->getPalavras().size(); i++) {
 									cout << this->tabuleiro->getPalavras()[i].getPalavra() << "                                                   " << endl;
 								}
+								Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 7);
 							}
-							Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 7);
+							
 							break;
 						}
 						case 1:
@@ -225,7 +228,6 @@ void Jogo::loop() {
 											cout << this->tabuleiro->getPalavras()[i].getPalavra() << "                                                   " << endl;
 										}
 									}
-									sms = 0;
 									Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 8);
 									break;
 								}
@@ -274,25 +276,25 @@ void Jogo::loop() {
 			}
 		}
 		else {
-			Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
-			cout << "Insira um número!!!                                           \n";
-			Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
-			for (size_t i = 0; i < ask.length(); i++)
-				cout << " ";
-			Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
-			cout << "1 - Tentar acertar a palavra\n";
-			cout << "2 - Save do jogo                                                  \n";
-			cout << "0 - Sair                                                          \n";
-			Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
-			cout << "                                                                    ";
-			Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
-			cout << "->\n";
-			if (dynamic_cast<Principiante*>(this->jogador)) {
-				for (size_t i = 0; i < (this->tabuleiro)->getPalavras().size(); i++) {
-					cout << this->tabuleiro->getPalavras()[i].getPalavra() << "                                                   " << endl;
-				}
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
+		cout << "Insira um número!!!                                           \n";
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
+		for (size_t i = 0; i < ask.length(); i++)
+			cout << " ";
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 5);
+		cout << "1 - Tentar acertar a palavra\n";
+		cout << "2 - Save do jogo                                                  \n";
+		cout << "0 - Sair                                                          \n";
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
+		cout << "                                                                    ";
+		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
+		cout << "->\n";
+		if (dynamic_cast<Principiante*>(this->jogador)) {
+			for (size_t i = 0; i < (this->tabuleiro)->getPalavras().size(); i++) {
+				cout << this->tabuleiro->getPalavras()[i].getPalavra() << "                                                   " << endl;
 			}
-			Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 8);
+		}
+		Ponto::gotoxy(3, (short)this->getTabuleiro()->getDimY() + 8);
 		}
 	}
 	if (this->getTabuleiro()->getPalavras().empty()) {
@@ -315,6 +317,20 @@ void Jogo::loop() {
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
 		cout << "Voce conseguiu acertar todas as palavras!!!!\nOs seu pontos são " << this->jogador->adquirirPontos() << "!!! Parabéns!!!!\n";
 		system("PAUSE");
+		ifstream f;
+		f.open(namefile);
+		bool p = (f) ? 1 : 0;
+		f.close();
+		if (p) {
+			string file_path = __FILE__;
+			string dir_path = file_path.substr(0, file_path.rfind("\\"));
+			string aux = dir_path + "\\" + namefile;
+			if (!DeleteFileA(namefile.c_str())){
+				int error = GetLastError();
+				printf("Error[%d] on removed file %s\n", error, aux.c_str());
+				exit(1);
+			}
+		}
 	}
 }
 
