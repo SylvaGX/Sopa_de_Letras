@@ -322,12 +322,9 @@ void Jogo::loop() {
 		bool p = (f) ? 1 : 0;
 		f.close();
 		if (p) {
-			string file_path = __FILE__;
-			string dir_path = file_path.substr(0, file_path.rfind("\\"));
-			string aux = dir_path + "\\" + namefile;
 			if (!DeleteFileA(namefile.c_str())){
 				int error = GetLastError();
-				printf("Error[%d] on removed file %s\n", error, aux.c_str());
+				printf("Error[%d] on removed file %s\n", error, namefile.c_str());
 				exit(1);
 			}
 		}

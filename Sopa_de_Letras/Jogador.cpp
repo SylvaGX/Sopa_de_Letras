@@ -41,8 +41,11 @@ void Jogador::setPontos(int pontos) {
 
 string Jogador::PedirNome() {
 	string Nnome;
-	cout << "Insira o seu nome\n-> ";
-	getline(cin, Nnome);
+	do {
+		system("CLS");
+		cout << "Insira o seu nome\n-> ";
+		getline(cin, Nnome);
+	} while (Nnome == "");
 	return Nnome;
 }
 
@@ -52,7 +55,7 @@ int Jogador::PedirIdade() {
 		system("CLS");
 		cout << "Insira a sua idade\n-> ";
 		getline(cin, Nidade);
-	} while (!is_numeric(Nidade));
+	} while (!is_numeric(Nidade) || Nidade == "");
 	return stoi(Nidade);
 }
 
