@@ -315,7 +315,7 @@ void Jogo::loop() {
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 8);
 		cout << "                                                                ";
 		Ponto::gotoxy(0, (short)this->getTabuleiro()->getDimY() + 4);
-		cout << "Voce conseguiu acertar todas as palavras!!!!\nOs seu pontos são " << this->jogador->adquirirPontos() << "!!! Parabéns!!!!\n";
+		cout << "Voce conseguiu acertar todas as palavras!!!!\nOs seu pontos são " << this->jogador->adquirirPontos() << "/" << this->jogador->GetPontos() << "!!! Parabéns!!!!\n";
 		system("PAUSE");
 		ifstream f;
 		f.open(namefile);

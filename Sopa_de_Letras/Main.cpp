@@ -120,6 +120,10 @@ int main() {
 			cout << "Não existe jogos guardados!!!!                                                                 \n";
 			sms = -1;
 		}
+		else if (sms == 3) {
+			cout << "Erro ao ler o ficheiro!!!                                                                      \n";
+			sms = -1;
+		}
 		cout << "1 - Novo Jogo\n2 - Carregar Jogo\n0 - Sair\n-> ";
 		getline(cin, k);
 		if (is_numeric(k) && k != "") {
@@ -206,6 +210,9 @@ int main() {
 											is.close();
 											system("CLS");
 											jogo->loop();
+										}
+										else {
+											sms = 3;
 										}
 										delete jogo;
 									}

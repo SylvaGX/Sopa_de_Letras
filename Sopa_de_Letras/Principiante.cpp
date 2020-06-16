@@ -11,7 +11,7 @@ int Principiante::adquirirPontos() {
 }
 
 void Principiante::Save(ofstream& os) {// mudar para por o nivel de dificuldade
-	os << "1\n" << this->GetNome() << "\n" << this->GetIdade() << "\n" << this->GetPontos() << "\n";
+	os << "1\n" << this->GetNome() << "\n" << to_string(this->GetIdade()) << "\n" << this->GetPontos() << "\n";
 }
 
 bool Principiante::Load(ifstream& is) {// mudar para ler o nivel de dificuldade
